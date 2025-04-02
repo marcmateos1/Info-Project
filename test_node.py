@@ -1,10 +1,10 @@
 from node import *
 
 n1=Node("aaa", 0, 0)
-n2=Node("bbb",0,0)
+n2=Node("bbb",3,4)
 
 #mostrar distancia
-#print(Distance(n1,n2))
+print(Distance(n1,n2))
 
 #mostrar quan afegeixes nodes i quan no pots
 print(AddNeighbour(n1,n2))
