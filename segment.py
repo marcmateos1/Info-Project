@@ -8,5 +8,7 @@ class Segment:
         self.cost=Distance(originnode, destnode)
 
     def __str__(self):
-        """Devuelve una representación en cadena del segmento."""
-        return f"Segmento {self.name}: {self.originnode.name} -> {self.destnode.name}, Costo: {self.cost:.2f}"
+        "Devuelve una representación en cadena del segmento."
+        return f"Segmento {self.name}: {self.originnode.name} -> {self.destnode.name}, Cost: {self.cost:.2f}"
+
+    

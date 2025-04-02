@@ -7,7 +7,7 @@ class Node:
 
 def AddNeighbour(n1,n2):
     if n2 in n1.list_of_neighbours:
-        print("El node no ha sigut agregat")
+
         return False
     n1.list_of_neighbours.append(n2)
     print("El node ha sigut agregat")
