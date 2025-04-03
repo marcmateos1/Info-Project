@@ -10,7 +10,6 @@ class Graph:
 
 
 def AddNode(g, n):
-    """Agrega un nodo al grafo. Devuelve False si ya existe y True si se añade."""
     if n in g.nodes:
         return False
     g.nodes.append(n)
@@ -39,21 +38,21 @@ def GetClosest(g, x, y):
 
 def Plot(g):
     """Dibuja el grafo con sus nodos y segmentos, mostrando los costos en los segmentos."""
-    plt.figure(figsize=(10, 7))
+    #plt.figure(figsize=(10, 7))
 
-    for segment in g.segments:
-        x_values = [segment.origin.x, segment.destination.x]
-        y_values = [segment.origin.y, segment.destination.y]
-        plt.plot(x_values, y_values, 'k-', linewidth=1)  # Dibujar el segmento
+    for segment in g.segments:   #es un bucle for on segment es una variable que fa referencia a cadascun dels valors de la llista g.segments
+        x_values = [segment.originnode.x, segment.destnode.x]
+        y_values = [segment.originnode.y, segment.destnode.y]
+        plt.plot(x_values, y_values, 'grey', linewidth=1)  # Dibujar el segmento
 
         # Mostrar el costo en el centro del segmento
-        mid_x = (segment.origin.x + segment.destination.x) / 2
-        mid_y = (segment.origin.y + segment.destination.y) / 2
-        plt.text(mid_x, mid_y, f"{segment.cost:.2f}", fontsize=10, color="red")
-
+        mid_x = (segment.originnode.x + segment.destnode.x) / 2
+        mid_y = (segment.originnode.y + segment.destnode.y) / 2
+        plt.text(mid_x, mid_y, f"{segment.cost:.2f}", fontsize=10, color="red")  #la f del principi es de f-string on es pot ficaar text i variables
+                                                                                    # el .2f significa que se especifiquen dos decimals en format float de f
     for node in g.nodes:
         plt.scatter(node.x, node.y, color='blue', s=100)
-        plt.text(node.x, node.y, node.name, fontsize=12, ha='right', color="black")
+        plt.text(node.x, node.y, node.name, fontsize=12, color="black")
 
     plt.xlabel("X")
     plt.ylabel("Y")
@@ -61,14 +60,13 @@ def Plot(g):
     plt.grid()
     plt.show()
 
-
 def PlotNode(g, nameOrigin):
     """Dibuja el grafo resaltando el nodo de origen y sus vecinos."""
     node_origin = next((node for node in g.nodes if node.name == nameOrigin), None)
     if node_origin is None:
         return False  # El nodo no existe
 
-    plt.figure(figsize=(10, 7))
+    #plt.figure(figsize=(10, 7)) dimensionar grafic
 
     for segment in g.segments:
         x_values = [segment.originnode.x, segment.destnode.x]
@@ -84,7 +82,7 @@ def PlotNode(g, nameOrigin):
         plt.text(mid_x, mid_y, f"{segment.cost:.2f}", fontsize=10, color="red")
 
     for node in g.nodes:
-        color = 'red'
+        color = 'gray'
         if node == node_origin:
             color = 'blue'  # Nodo origen en azul
         elif node in node_origin.list_of_neighbours:

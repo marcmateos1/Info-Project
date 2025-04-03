@@ -44,13 +44,13 @@ def CreateGraph_1():
     return G
 
 print("Probando el grafo...")
-G = CreateGraph_1()
-#Plot(G)
-PlotNode(G, "C")
+A= CreateGraph_1()
+Plot(A)
+PlotNode(A, "G")
 
 # Probar GetClosest
-n = GetClosest(G, 15, 5)
+n = GetClosest(A, 15, 5)
 print(n.name)  # Debe imprimir "J"
 
-n = GetClosest(G, 8, 19)
+n = GetClosest(A, 8, 19)
 print(n.name)  # Debe imprimir "B"
