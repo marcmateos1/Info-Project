@@ -71,9 +71,13 @@ def PlotNode(g, nameOrigin):
     for segment in g.segments:
         x_values = [segment.originnode.x, segment.destnode.x]
         y_values = [segment.originnode.y, segment.destnode.y]
-        color = 'blue'
+        color = 'grey'
         if segment.originnode == node_origin and segment.destnode in node_origin.list_of_neighbours:
             color = 'red'  # Resaltar segmentos conectados al nodo origen
+            dx=segment.destnode.x-segment.originnode.x
+            dy=segment.destnode.y-segment.originnode.y
+            plt.arrow(segment.originnode.x,segment.originnode.y, dx ,dy, head_width=0.5, head_length=10)
+
         plt.plot(x_values, y_values, color=color, linewidth=1)
 
         # Mostrar el costo del segmento
