@@ -1,0 +1,7 @@
+Node A 2 3
+Node B 1 1
+Node C 5 3
+Node D 1 5
+Segment AB A B
+Segment BC B C
+Segment CD C D

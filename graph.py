@@ -76,7 +76,7 @@ def PlotNode(g, nameOrigin):
             color = 'red'  # Resaltar segmentos conectados al nodo origen
             dx=segment.destnode.x-segment.originnode.x
             dy=segment.destnode.y-segment.originnode.y
-            plt.arrow(segment.originnode.x,segment.originnode.y, dx ,dy, head_width=0.5, head_length=10)
+            plt.arrow(segment.originnode.x,segment.originnode.y, dx ,dy, head_width=0.5, head_length=1)
 
         plt.plot(x_values, y_values, color=color, linewidth=1)
 
@@ -101,3 +101,24 @@ def PlotNode(g, nameOrigin):
     plt.show()
 
     return True
+
+def CreateGraphFromFiles(file):
+    M=Graph()
+    F=open(file, "r") #llegir arxiu
+    lineas=F.readlines()
+
+    for line in lineas:
+        info=line.rstrip().split(" ")
+        print(info)
+        if info[0]=="Node":
+            n=Node(info[1], float(info[2]), float(info[3]))
+            print(f"El node trobat és {info[1]}, {float(info[2])}, {float(info[3])}")
+            AddNode(M,n)
+        elif info[0]=="Segment":
+            s=Segment(info[1], info[2], info[3])
+            print(f"El node segment és {info[1]}, {(info[2])}, {(info[3])}")
+            AddSegment(M,s)
+
+    F.close()
+    return M
+
