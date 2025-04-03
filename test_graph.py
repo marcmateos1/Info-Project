@@ -43,18 +43,78 @@ def CreateGraph_1():
 
     return G
 
+def CreateGraph_2():
+    G = Graph()
+    AddNode(G, Node("A", 3, 26))
+    AddNode(G, Node("B", 27, 18))
+    AddNode(G, Node("C", 2, 10))
+    AddNode(G, Node("D", 23, 26))
+    AddNode(G, Node("E", 12, 24))
+    AddNode(G, Node("F", 3, 4))
+    AddNode(G, Node("G", 10, 8))
+    AddNode(G, Node("H", 21, 3))
+    AddNode(G, Node("I", 17, 17))
+    AddNode(G, Node("J", 4, 30))
+    AddNode(G, Node("K", 23, 22))
+    AddNode(G, Node("L", 5, 17))
+
+    AddSegment(G, "AB", "A", "B")
+    AddSegment(G, "AE", "A", "E")
+    AddSegment(G, "AK", "A", "K")
+    AddSegment(G, "BA", "B", "A")
+    AddSegment(G, "BC", "B", "C")
+    AddSegment(G, "BF", "B", "F")
+    AddSegment(G, "BK", "B", "K")
+    AddSegment(G, "BG", "B", "G")
+    AddSegment(G, "CD", "C", "D")
+    AddSegment(G, "CG", "C", "G")
+    AddSegment(G, "DG", "D", "G")
+    AddSegment(G, "DH", "D", "H")
+    AddSegment(G, "DI", "D", "I")
+    AddSegment(G, "EF", "E", "F")
+    AddSegment(G, "FL", "F", "L")
+    AddSegment(G, "GB", "G", "B")
+    AddSegment(G, "GF", "G", "F")
+    AddSegment(G, "GH", "G", "H")
+    AddSegment(G, "ID", "I", "D")
+    AddSegment(G, "IJ", "I", "J")
+    AddSegment(G, "JI", "J", "I")
+    AddSegment(G, "KA", "K", "A")
+    AddSegment(G, "KL", "K", "L")
+    AddSegment(G, "LK", "L", "K")
+    AddSegment(G, "LF", "L", "F")
+
+    return G
+
+
 print("Probando el grafo...")
-#A= CreateGraph_1()
-#Plot(A)
-#PlotNode(A, "G")
+A= CreateGraph_1()
+Plot(A)
+PlotNode(A, "G")
 
 # Probar GetClosest
-#n = GetClosest(A, 15, 5)
-#print(n.name)  # Debe imprimir "J"
+n = GetClosest(A, 15, 5)
+print(n.name)  # Debe imprimir "J"
 
-#n = GetClosest(A, 8, 19)
-#print(n.name)  # Debe imprimir "B"
+n = GetClosest(A, 8, 19)
+print(n.name)  # Debe imprimir "B"
 
 A= CreateGraphFromFiles("ElsMeusNodesSegments.txt")
 Plot(A)
 PlotNode(A, "A")
+
+print("Probando el grafo 2...")
+Q= CreateGraph_2()
+Plot(Q)
+PlotNode(Q, "G")
+
+# Probar GetClosest
+n = GetClosest(Q, 15, 5)
+print(n.name)  # Debe imprimir "J"
+
+n = GetClosest(Q, 8, 19)
+print(n.name)  # Debe imprimir "B"
+
+Q= CreateGraphFromFiles("ElsMeusNodesSegments.txt")
+Plot(Q)
+PlotNode(Q, "A")
