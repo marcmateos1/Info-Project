@@ -110,14 +110,22 @@ def CreateGraphFromFiles(file):
     for line in lineas:
         info=line.rstrip().split(" ")
         print(info)
+        nodes_by_name={} #lloc on es guarden els noms dels Nodes per ferlos servir als segments amb els seus atributs
+
         if info[0]=="Node":
             n=Node(info[1], float(info[2]), float(info[3]))
             print(f"El node trobat és {info[1]}, {float(info[2])}, {float(info[3])}")
             AddNode(M,n)
+            nodes_by_name[info[1]]=n
         elif info[0]=="Segment":
-            s=Segment(info[1], info[2], info[3])
-            print(f"El node segment és {info[1]}, {(info[2])}, {(info[3])}")
-            AddSegment(M,s)
+            # Buscamos las instancias de los nodos de origen y destino por su nombre
+            origin_node = nodes_by_name.get(info[2])
+            destination_node = nodes_by_name.get(info[3])
+
+            if origin_node and destination_node:
+                s = Segment(info[1], origin_node, destination_node)
+                print(f"El segment trobat és {info[1]}, {info[2]}, {info[3]}")
+                AddSegment(M,info[1], info[2], info[3])
 
     F.close()
     return M
