@@ -71,23 +71,23 @@ def PlotNode(g, nameOrigin):
     plt.figure(figsize=(10, 7))
 
     for segment in g.segments:
-        x_values = [segment.origin.x, segment.destination.x]
-        y_values = [segment.origin.y, segment.destination.y]
-        color = 'gray'
-        if segment.origin == node_origin and segment.destination in node_origin.neighbors:
+        x_values = [segment.originnode.x, segment.destnode.x]
+        y_values = [segment.originnode.y, segment.destnode.y]
+        color = 'blue'
+        if segment.originnode == node_origin and segment.destnode in node_origin.list_of_neighbours:
             color = 'red'  # Resaltar segmentos conectados al nodo origen
         plt.plot(x_values, y_values, color=color, linewidth=1)
 
         # Mostrar el costo del segmento
-        mid_x = (segment.origin.x + segment.destination.x) / 2
-        mid_y = (segment.origin.y + segment.destination.y) / 2
+        mid_x = (segment.originnode.x + segment.destnode.x) / 2
+        mid_y = (segment.originnode.y + segment.destnode.y) / 2
         plt.text(mid_x, mid_y, f"{segment.cost:.2f}", fontsize=10, color="red")
 
     for node in g.nodes:
-        color = 'gray'
+        color = 'red'
         if node == node_origin:
             color = 'blue'  # Nodo origen en azul
-        elif node in node_origin.neighbors:
+        elif node in node_origin.list_of_neighbours:
             color = 'green'  # Vecinos en verde
         plt.scatter(node.x, node.y, color=color, s=100)
         plt.text(node.x, node.y, node.name, fontsize=12, ha='right', color="black")
