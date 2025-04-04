@@ -17,6 +17,7 @@ def AddNode(g, n):
 
 
 def AddSegment(g, name, nameOrigin, nameDestination):
+
     """Agrega un segmento al grafo entre dos nodos existentes.
     También actualiza la lista de vecinos del nodo origen."""
     origin = next((node for node in g.nodes if node.name == nameOrigin), None)
@@ -28,6 +29,12 @@ def AddSegment(g, name, nameOrigin, nameDestination):
     segment = Segment(name, origin, destination)
     g.segments.append(segment)
     AddNeighbour(origin, destination)  # Agregar destino a la lista de vecinos de origen
+    return True
+
+def AddSegmentFile (g ,name, nodeOrigin, nodeDestination):
+    segment = Segment(name, nodeOrigin, nodeDestination)
+    g.segments.append(segment)
+    AddNeighbour(nodeOrigin, nodeDestination)  # Agregar destino a la lista de vecinos de origen
     return True
 
 
@@ -102,30 +109,40 @@ def PlotNode(g, nameOrigin):
 
     return True
 
+
 def CreateGraphFromFiles(file):
-    M=Graph()
-    F=open(file, "r") #llegir arxiu
-    lineas=F.readlines()
+    M = Graph()
+    F = open(file, "r")  # llegir arxiu
+    nodelist=[] #llista per guardar els nodes
+    lineas = F.readline()
+    while lineas!="": #llegir arxiu fins ultima fila
+        trozos=lineas.rstrip().split()
 
-    for line in lineas:
-        info=line.rstrip().split(" ")
-        print(info)
-        nodes_by_name={} #lloc on es guarden els noms dels Nodes per ferlos servir als segments amb els seus atributs
+        if trozos[0]=="Node":
+            n=Node(trozos[1], float(trozos[2]),float(trozos[3]))
+            nodelist.append(n)
+            AddNode(M , n)
 
-        if info[0]=="Node":
-            n=Node(info[1], float(info[2]), float(info[3]))
-            print(f"El node trobat és {info[1]}, {float(info[2])}, {float(info[3])}")
-            AddNode(M,n)
-            nodes_by_name[info[1]]=n
-        elif info[0]=="Segment":
-            # Buscamos las instancias de los nodos de origen y destino por su nombre
-            origin_node = nodes_by_name.get(info[2])
-            destination_node = nodes_by_name.get(info[3])
 
-            if origin_node and destination_node:
-                s = Segment(info[1], origin_node, destination_node)
-                print(f"El segment trobat és {info[1]}, {info[2]}, {info[3]}")
-                AddSegment(M,info[1], info[2], info[3])
+        if trozos[0]=="Segment":
+            for valores in nodelist:
+                i=0
+                foundorigen=False
+                founddestino=False
+
+                while i<len(nodelist):
+                    if trozos[2]==nodelist[i].name:
+                        origen=nodelist[i]
+                        foundorigen=True
+                    if trozos[3]==nodelist[i].name:
+                        destino=nodelist[i]
+                        founddestino=True
+                    i=i+1
+
+                if foundorigen==True and founddestino==True:
+                    AddSegmentFile(M, trozos[1], origen, destino)
+
+        lineas = F.readline()
 
     F.close()
     return M
