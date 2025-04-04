@@ -17,6 +17,7 @@ def AddNode(g, n):
 
 
 def AddSegment(g, name, nameOrigin, nameDestination):
+
     """Agrega un segmento al grafo entre dos nodos existentes.
     También actualiza la lista de vecinos del nodo origen."""
     origin = next((node for node in g.nodes if node.name == nameOrigin), None)
@@ -28,6 +29,12 @@ def AddSegment(g, name, nameOrigin, nameDestination):
     segment = Segment(name, origin, destination)
     g.segments.append(segment)
     AddNeighbour(origin, destination)  # Agregar destino a la lista de vecinos de origen
+    return True
+
+def AddSegmentFile (g ,name, nodeOrigin, nodeDestination):
+    segment = Segment(name, nodeOrigin, nodeDestination)
+    g.segments.append(segment)
+    AddNeighbour(nodeOrigin, nodeDestination)  # Agregar destino a la lista de vecinos de origen
     return True
 
 
@@ -106,27 +113,34 @@ def PlotNode(g, nameOrigin):
 def CreateGraphFromFiles(file):
     M = Graph()
     F = open(file, "r")  # llegir arxiu
-    nodelist=[]
+    nodelist=[] #llista per guardar els nodes
     lineas = F.readline()
-    while lineas!="":
+    while lineas!="": #llegir arxiu fins ultima fila
         trozos=lineas.rstrip().split()
+
         if trozos[0]=="Node":
             n=Node(trozos[1], float(trozos[2]),float(trozos[3]))
             nodelist.append(n)
             AddNode(M , n)
-            print(nodelist)
+
 
         if trozos[0]=="Segment":
             for valores in nodelist:
                 i=0
+                foundorigen=False
+                founddestino=False
+
                 while i<len(nodelist):
                     if trozos[2]==nodelist[i].name:
                         origen=nodelist[i]
+                        foundorigen=True
                     if trozos[3]==nodelist[i].name:
                         destino=nodelist[i]
+                        founddestino=True
                     i=i+1
 
-            AddSegment(M, trozos[1], origen, destino)
+                if foundorigen==True and founddestino==True:
+                    AddSegmentFile(M, trozos[1], origen, destino)
 
         lineas = F.readline()
 
