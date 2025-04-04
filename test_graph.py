@@ -117,4 +117,3 @@ print(n.name)  # Debe imprimir "B"
 Q= CreateGraphFromFiles("ElsMeusNodesSegments.txt")
 Plot(Q)
 PlotNode(Q, "A")
-
