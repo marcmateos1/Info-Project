@@ -102,30 +102,33 @@ def PlotNode(g, nameOrigin):
 
     return True
 
+
 def CreateGraphFromFiles(file):
-    M=Graph()
-    F=open(file, "r") #llegir arxiu
-    lineas=F.readlines()
+    M = Graph()
+    F = open(file, "r")  # llegir arxiu
+    nodelist=[]
+    lineas = F.readline()
+    while lineas!="":
+        trozos=lineas.rstrip().split()
+        if trozos[0]=="Node":
+            n=Node(trozos[1], float(trozos[2]),float(trozos[3]))
+            nodelist.append(n)
+            AddNode(M , n)
+            print(nodelist)
 
-    for line in lineas:
-        info=line.rstrip().split(" ")
-        print(info)
-        nodes_by_name={} #lloc on es guarden els noms dels Nodes per ferlos servir als segments amb els seus atributs
+        if trozos[0]=="Segment":
+            for valores in nodelist:
+                i=0
+                while i<len(nodelist):
+                    if trozos[2]==nodelist[i].name:
+                        origen=nodelist[i]
+                    if trozos[3]==nodelist[i].name:
+                        destino=nodelist[i]
+                    i=i+1
 
-        if info[0]=="Node":
-            n=Node(info[1], float(info[2]), float(info[3]))
-            print(f"El node trobat és {info[1]}, {float(info[2])}, {float(info[3])}")
-            AddNode(M,n)
-            nodes_by_name[info[1]]=n
-        elif info[0]=="Segment":
-            # Buscamos las instancias de los nodos de origen y destino por su nombre
-            origin_node = nodes_by_name.get(info[2])
-            destination_node = nodes_by_name.get(info[3])
+            AddSegment(M, trozos[1], origen, destino)
 
-            if origin_node and destination_node:
-                s = Segment(info[1], origin_node, destination_node)
-                print(f"El segment trobat és {info[1]}, {info[2]}, {info[3]}")
-                AddSegment(M,info[1], info[2], info[3])
+        lineas = F.readline()
 
     F.close()
     return M
