@@ -36,6 +36,21 @@ def showgrafofromfiles_veins():
     node_origin_for_grafos = entry.get()
     PlotNode(A, node_origin_for_grafos)
 
+def AddNodeToTheFile():
+    messagebox.showinfo("Text introduït: ", entry_node.get())
+    newtext=entry_node.get()
+    F=open("ElsMeusNodesSegments.txt", "a")
+    F.write(newtext+"\n")
+    F.close()
+
+def AddSegmentToTheFile():
+    messagebox.showinfo("Text introduït: ", entry_segment.get())
+    newtext=entry_segment.get()
+    F=open("ElsMeusNodesSegments.txt", "a")
+    F.write(newtext+"\n")
+    F.close()
+
+
 #li donem  mida i títol a la finestra i creem les files i columnes necessàries //estructura de la finestra
 fin=tk.Tk()
 fin.geometry("1000x600")
@@ -108,7 +123,7 @@ button=tk.Button(inputframe, text="Input", command=showtext)
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Configuració espai pels inputs Add Node
-inputnode=tk.LabelFrame(fin,text="Afegeix un node (name, cord x, cord y)")
+inputnode=tk.LabelFrame(fin,text="Afegeix un node (-Node-, name, cord x, cord y)")
 inputnode.grid(row=1,column=1,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 
 inputnode.rowconfigure(0, weight=1)
@@ -118,11 +133,11 @@ inputnode.columnconfigure(0, weight=1)
 entry_node=tk.Entry(inputnode)
 entry_node.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
-button=tk.Button(inputnode, text="Input", command=showtext)
+button=tk.Button(inputnode, text="Input", command=AddNodeToTheFile)
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Configuració espai pels inputs Add Segment
-inputsegment=tk.LabelFrame(fin,text="Afegeix un segment (name, origin, dest)")
+inputsegment=tk.LabelFrame(fin,text="Afegeix un segment (-Segment-, name, origin, dest)")
 inputsegment.grid(row=2,column=1,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 
 inputsegment.rowconfigure(0, weight=1)
@@ -132,11 +147,11 @@ inputsegment.columnconfigure(0, weight=1)
 entry_segment=tk.Entry(inputsegment)
 entry_segment.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
-button=tk.Button(inputsegment, text="Input", command=showtext)
+button=tk.Button(inputsegment, text="Input", command=AddSegmentToTheFile)
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Configuració delete nodes
-inputdeletenode=tk.LabelFrame(fin,text="Elimina un node (name, cord x, cord y)")
+inputdeletenode=tk.LabelFrame(fin,text="Elimina un node (-Node-, name, cord x, cord y)")
 inputdeletenode.grid(row=0,column=2,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 
 inputdeletenode.rowconfigure(0, weight=1)
@@ -150,7 +165,7 @@ button=tk.Button(inputdeletenode, text="Input", command=showtext)
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Configuració delete segments
-inputdeletesegment=tk.LabelFrame(fin,text="Elimina un segment (name, cord x, cord y)")
+inputdeletesegment=tk.LabelFrame(fin,text="Elimina un segment (-Segment-, name, cord x, cord y)")
 inputdeletesegment.grid(row=1,column=2,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 
 inputdeletesegment.rowconfigure(0, weight=1)
