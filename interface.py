@@ -41,11 +41,11 @@ fin=tk.Tk()
 fin.geometry("1000x600")
 fin.title("Interfaç gràfica V1")
 fin.columnconfigure(0, weight=1)
-fin.columnconfigure(1, weight=10)
+fin.columnconfigure(1, weight=1)
+fin.columnconfigure(2, weight=1)
 fin.rowconfigure(0, weight=1)
 fin.rowconfigure(1, weight=1)
 fin.rowconfigure(2, weight=1)
-fin.rowconfigure(3, weight=1)
 
 
 #Configuració espai grafics exemple
@@ -93,9 +93,9 @@ button2.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 #button3=tk.Button(espaigrafics, text="Grafic arxiu")
 #button3.grid(row=2, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
-#Configuració espai pels inputs
+#Configuració espai pels input buscar node
 inputframe=tk.LabelFrame(fin,text="Tria del node d'origen:")
-inputframe.grid(row=3,column=0,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+inputframe.grid(row=0,column=1,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 
 inputframe.rowconfigure(0, weight=1)
 inputframe.rowconfigure(1, weight=1)
@@ -107,11 +107,64 @@ entry.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 button=tk.Button(inputframe, text="Input", command=showtext)
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
-#Configuració espai pels grafics/imatges
-pictureframe=tk.LabelFrame(fin, text="Visualització dels grafos")
-pictureframe.grid(row=0, column=1, rowspan=4, padx=5, pady=5, sticky="nsew")
+#Configuració espai pels inputs Add Node
+inputnode=tk.LabelFrame(fin,text="Afegeix un node (name, cord x, cord y)")
+inputnode.grid(row=1,column=1,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 
-pictureframe.rowconfigure(0, weight=1)
-pictureframe.columnconfigure(0, weight=1)
+inputnode.rowconfigure(0, weight=1)
+inputnode.rowconfigure(1, weight=1)
+inputnode.columnconfigure(0, weight=1)
+
+entry_node=tk.Entry(inputnode)
+entry_node.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button=tk.Button(inputnode, text="Input", command=showtext)
+button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+#Configuració espai pels inputs Add Segment
+inputsegment=tk.LabelFrame(fin,text="Afegeix un segment (name, origin, dest)")
+inputsegment.grid(row=2,column=1,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+
+inputsegment.rowconfigure(0, weight=1)
+inputsegment.rowconfigure(1, weight=1)
+inputsegment.columnconfigure(0, weight=1)
+
+entry_segment=tk.Entry(inputsegment)
+entry_segment.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button=tk.Button(inputsegment, text="Input", command=showtext)
+button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+#Configuració delete nodes
+inputdeletenode=tk.LabelFrame(fin,text="Elimina un node (name, cord x, cord y)")
+inputdeletenode.grid(row=0,column=2,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+
+inputdeletenode.rowconfigure(0, weight=1)
+inputdeletenode.rowconfigure(1, weight=1)
+inputdeletenode.columnconfigure(0, weight=1)
+
+entry_node_delete=tk.Entry(inputdeletenode)
+entry_node_delete.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button=tk.Button(inputdeletenode, text="Input", command=showtext)
+button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+#Configuració delete segments
+inputdeletesegment=tk.LabelFrame(fin,text="Elimina un segment (name, cord x, cord y)")
+inputdeletesegment.grid(row=1,column=2,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+
+inputdeletesegment.rowconfigure(0, weight=1)
+inputdeletesegment.rowconfigure(1, weight=1)
+inputdeletesegment.columnconfigure(0, weight=1)
+
+entry_segment_delete=tk.Entry(inputdeletesegment)
+entry_segment_delete.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button=tk.Button(inputdeletesegment, text="Input", command=showtext)
+button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+#Configuració espai guardar el file
+guardat=tk.LabelFrame(fin,text="Guarda els canvis")
+guardat.grid(row=2,column=2,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 
 fin.mainloop()
