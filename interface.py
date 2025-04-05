@@ -2,17 +2,83 @@ import tkinter as tk
 
 import matplotlib.pyplot as plt
 
-#li donem  mida i títol a la finestra i creem les files i columnes necessàries
+#li donem  mida i títol a la finestra i creem les files i columnes necessàries //estructura de la finestra
 fin=tk.Tk()
-fin.geometry("800x400")
-fin.title("graphs")
-fin.columnconfigure(0)
-fin.columnconfigure(1)
-fin.rowconfigure(0)
-fin.rowconfigure(1)
-fin.rowconfigure(2)
+fin.geometry("1000x600")
+fin.title("Interfaç gràfica V1")
+fin.columnconfigure(0, weight=1)
+fin.columnconfigure(1, weight=10)
+fin.rowconfigure(0, weight=1)
+fin.rowconfigure(1, weight=1)
+fin.rowconfigure(2, weight=1)
+fin.rowconfigure(3, weight=1)
 
-q1=tk.LabelFrame(fin,text="Choose graph:")
-q1.grid(row=0,column=0,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+
+#Configuració espai grafics exemple
+graficsexemple=tk.LabelFrame(fin,text="Grafo de exemple:")
+graficsexemple.grid(row=0,column=0,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+
+graficsexemple.rowconfigure(0, weight=1)
+graficsexemple.rowconfigure(1, weight=1)
+graficsexemple.columnconfigure(0, weight=1)
+
+button1=tk.Button(graficsexemple, text="Mapa grafo")
+button1.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button2=tk.Button(graficsexemple, text="Grafo amb veïns")
+button2.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+#Configuració espai grafics inventat
+graficinventat=tk.LabelFrame(fin,text="El nostre grafo inventat:")
+graficinventat.grid(row=1,column=0,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+
+graficinventat.rowconfigure(0, weight=1)
+graficinventat.rowconfigure(1, weight=1)
+graficinventat.columnconfigure(0, weight=1)
+
+button1=tk.Button(graficinventat, text="Mapa grafo")
+button1.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button2=tk.Button(graficinventat, text="Grafo amb veïns")
+button2.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+#Configuració espai grafics del arxiu text
+grafictext=tk.LabelFrame(fin,text="Grafo llegint un document:")
+grafictext.grid(row=2,column=0,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+
+grafictext.rowconfigure(0, weight=1)
+grafictext.rowconfigure(1, weight=1)
+grafictext.columnconfigure(0, weight=1)
+
+button1=tk.Button(grafictext, text="Mapa grafo")
+button1.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button2=tk.Button(grafictext, text="Grafo amb veïns")
+button2.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+#button3=tk.Button(espaigrafics, text="Grafic arxiu")
+#button3.grid(row=2, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+#Configuració espai pels inputs
+inputframe=tk.LabelFrame(fin,text="Tria del node d'origen:")
+inputframe.grid(row=3,column=0,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+
+inputframe.rowconfigure(0, weight=1)
+inputframe.rowconfigure(1, weight=1)
+inputframe.columnconfigure(0, weight=1)
+
+entry=tk.Entry(inputframe)
+entry.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button=tk.Button(inputframe, text="Input")
+button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+#Configuració espai pels grafics/imatges
+pictureframe=tk.LabelFrame(fin, text="Visualització dels grafos")
+pictureframe.grid(row=0, column=1, rowspan=4, padx=5, pady=5, sticky="nsew")
+
+pictureframe.rowconfigure(0, weight=1)
+pictureframe.columnconfigure(0, weight=1)
+
 
 fin.mainloop()
