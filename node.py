@@ -10,7 +10,6 @@ def AddNeighbour(n1,n2):
 
         return False
     n1.list_of_neighbours.append(n2)
-    print("El node ha sigut agregat")
     return True
 def Distance(n1,n2):
     distance=((n1.x-n2.x)**2+(n1.y-n2.y)**2)**(1/2)
