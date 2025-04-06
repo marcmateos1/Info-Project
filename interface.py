@@ -1,7 +1,10 @@
+from matplotlib.cbook import contiguous_regions
+
 from graph import *
 import tkinter as tk
 from tkinter import messagebox
-
+import os
+from tkinter import filedialog
 selected_file="ElsMeusNodesSegments.txt"
 
 def SelectedFile():
@@ -15,8 +18,23 @@ def SelectedFile():
             pass  # crea el archivo vacío
 
 def SaveFile():
-    messagebox.showinfo("Treballant amb l'arxiu .txt: ", entry_file.get()) #linia temporal, esborrar quan es faci la funcio
+    filepath = filedialog.asksaveasfilename(defaultextension=".txt",
+                                             filetypes=[("Text files", "*.txt")],
+                                             title="Desa com...")
 
+    F=open(selected_file,"r")
+    line=F.readline()
+    contingut=""
+    while line!="":
+        contingut=contingut+line
+        line=F.readline()
+
+    F.close()
+
+    if filepath:  # Només si no s'ha cancel·lat
+        with open(filepath, "w") as f:
+            f.write(contingut)
+        print(f"Arxiu desat a: {filepath}")
 
 def showtext():
     messagebox.showinfo("Text introduït: ", entry.get())
@@ -101,6 +119,9 @@ def DeleteSegmentToTheFile():
     L = open(selected_file, "w")
     L.writelines(lineswanted)
     L.close()
+
+#def SaveGraph():
+
 
 
 
@@ -218,7 +239,7 @@ button=tk.Button(inputdeletenode, text="Input", command=DeleteNodeToTheFile)
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Configuració delete segments
-inputdeletesegment=tk.LabelFrame(fin,text="Elimina un segment (name, cord x, cord y)")
+inputdeletesegment=tk.LabelFrame(fin,text="Elimina un segment (name, origin, dest)")
 inputdeletesegment.grid(row=1,column=2,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 
 inputdeletesegment.rowconfigure(0, weight=1)
