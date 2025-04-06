@@ -31,10 +31,14 @@ def SaveFile():
 
     F.close()
 
-    if filepath:  # Només si no s'ha cancel·lat
+    if filepath:
         with open(filepath, "w") as f:
             f.write(contingut)
         print(f"Arxiu desat a: {filepath}")
+
+    fitxer_temporal = selected_file
+    if os.path.exists(fitxer_temporal):
+        os.remove(fitxer_temporal)
 
 def showtext():
     messagebox.showinfo("Text introduït: ", entry.get())
