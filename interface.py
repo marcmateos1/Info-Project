@@ -2,7 +2,21 @@ from graph import *
 import tkinter as tk
 from tkinter import messagebox
 
-#node_origin_for_grafos="A"
+selected_file="ElsMeusNodesSegments.txt"
+
+def SelectedFile():
+    global selected_file
+    messagebox.showinfo("Treballant amb l'arxiu .txt: ", entry_file.get())
+    text=entry_file.get()+".txt"
+    selected_file=text
+
+    if not os.path.exists(selected_file):
+        with open(selected_file, "w") as f:
+            pass  # crea el archivo vacío
+
+def SaveFile():
+    messagebox.showinfo("Treballant amb l'arxiu .txt: ", entry_file.get()) #linia temporal, esborrar quan es faci la funcio
+
 
 def showtext():
     messagebox.showinfo("Text introduït: ", entry.get())
@@ -28,25 +42,25 @@ def showgrafoinventat_vaeïns():
     PlotNode(A, node_origin_for_grafos)
 
 def showgrafofromfiles():
-    A = CreateGraphFromFiles("ElsMeusNodesSegments.txt")
+    A = CreateGraphFromFiles(selected_file)
     Plot(A)
 
 def showgrafofromfiles_veins():
-    A= CreateGraphFromFiles("ElsMeusNodesSegments.txt")
+    A= CreateGraphFromFiles(selected_file)
     node_origin_for_grafos = entry.get()
     PlotNode(A, node_origin_for_grafos)
 
 def AddNodeToTheFile():
     messagebox.showinfo("Text introduït: ", entry_node.get())
     newtext=entry_node.get()
-    F=open("ElsMeusNodesSegments.txt", "a")
+    F=open(selected_file, "a")
     F.write("Node "+newtext+"\n")
     F.close()
 
 def AddSegmentToTheFile():
     messagebox.showinfo("Text introduït: ", entry_segment.get())
     newtext=entry_segment.get()
-    F=open("ElsMeusNodesSegments.txt", "a")
+    F=open(selected_file, "a")
     F.write("Segment "+newtext+"\n")
     F.close()
 
@@ -54,7 +68,7 @@ def DeleteNodeToTheFile():
     messagebox.showinfo("Text introduït: ", entry_node_delete.get())
     deletetext="Node "+entry_node_delete.get()
     deletetext_seccions=deletetext.rstrip().split()
-    F=open("ElsMeusNodesSegments.txt", "r")
+    F=open(selected_file, "r")
     line=F.readline()
     lineswanted=[]
     while line!="":
@@ -67,7 +81,7 @@ def DeleteNodeToTheFile():
                 lineswanted.append(line)
         line=F.readline()
     F.close()
-    L = open("ElsMeusNodesSegments.txt", "w")
+    L = open(selected_file, "w")
     L.writelines(lineswanted)
     L.close()
 
@@ -75,7 +89,7 @@ def DeleteSegmentToTheFile():
     messagebox.showinfo("Text introduït: ", entry_segment_delete.get())
     deletetext="Segment "+entry_segment_delete.get()
     deletetext_seccions=deletetext.rstrip().split()
-    F=open("ElsMeusNodesSegments.txt", "r")
+    F=open(selected_file, "r")
     line=F.readline()
     lineswanted=[]
     while line!="":
@@ -84,9 +98,10 @@ def DeleteSegmentToTheFile():
             lineswanted.append(line)
         line=F.readline()
     F.close()
-    L = open("ElsMeusNodesSegments.txt", "w")
+    L = open(selected_file, "w")
     L.writelines(lineswanted)
     L.close()
+
 
 
 #li donem  mida i títol a la finestra i creem les files i columnes necessàries //estructura de la finestra
@@ -217,7 +232,21 @@ button=tk.Button(inputdeletesegment, text="Input", command=DeleteSegmentToTheFil
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Configuració espai guardar el file
-guardat=tk.LabelFrame(fin,text="Guarda els canvis")
+guardat=tk.LabelFrame(fin,text="Selecciona ficher")
 guardat.grid(row=2,column=2,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+
+guardat.rowconfigure(0, weight=1)
+guardat.rowconfigure(1, weight=1)
+guardat.rowconfigure(2, weight=1)
+guardat.columnconfigure(0, weight=1)
+
+entry_file=tk.Entry(guardat)
+entry_file.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button=tk.Button(guardat, text="Input", command=SelectedFile)
+button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button=tk.Button(guardat, text="Guardar arxiu seleccionat", command=SaveFile)
+button.grid(row=2, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 fin.mainloop()
