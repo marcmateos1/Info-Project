@@ -1,10 +1,9 @@
-from matplotlib.cbook import contiguous_regions
-
 from graph import *
 import tkinter as tk
 from tkinter import messagebox
 import os
 from tkinter import filedialog
+
 selected_file="ElsMeusNodesSegments.txt"
 
 def SelectedFile():
