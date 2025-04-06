@@ -71,6 +71,23 @@ def DeleteNodeToTheFile():
     L.writelines(lineswanted)
     L.close()
 
+def DeleteSegmentToTheFile():
+    messagebox.showinfo("Text introduït: ", entry_segment_delete.get())
+    deletetext="Segment "+entry_segment_delete.get()
+    deletetext_seccions=deletetext.rstrip().split()
+    F=open("ElsMeusNodesSegments.txt", "r")
+    line=F.readline()
+    lineswanted=[]
+    while line!="":
+        trozos=line.rstrip().split(" ")
+        if trozos[2]!=deletetext_seccions[2] or trozos[3]!=deletetext_seccions[3]:
+            lineswanted.append(line)
+        line=F.readline()
+    F.close()
+    L = open("ElsMeusNodesSegments.txt", "w")
+    L.writelines(lineswanted)
+    L.close()
+
 
 #li donem  mida i títol a la finestra i creem les files i columnes necessàries //estructura de la finestra
 fin=tk.Tk()
@@ -172,7 +189,7 @@ button=tk.Button(inputsegment, text="Input", command=AddSegmentToTheFile)
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Configuració delete nodes
-inputdeletenode=tk.LabelFrame(fin,text="Elimina un node (-Node-, name)")
+inputdeletenode=tk.LabelFrame(fin,text="Elimina un node (name)")
 inputdeletenode.grid(row=0,column=2,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 
 inputdeletenode.rowconfigure(0, weight=1)
@@ -186,7 +203,7 @@ button=tk.Button(inputdeletenode, text="Input", command=DeleteNodeToTheFile)
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Configuració delete segments
-inputdeletesegment=tk.LabelFrame(fin,text="Elimina un segment (-Segment-, name, cord x, cord y)")
+inputdeletesegment=tk.LabelFrame(fin,text="Elimina un segment (name, cord x, cord y)")
 inputdeletesegment.grid(row=1,column=2,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 
 inputdeletesegment.rowconfigure(0, weight=1)
@@ -196,7 +213,7 @@ inputdeletesegment.columnconfigure(0, weight=1)
 entry_segment_delete=tk.Entry(inputdeletesegment)
 entry_segment_delete.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
-button=tk.Button(inputdeletesegment, text="Input", command=showtext)
+button=tk.Button(inputdeletesegment, text="Input", command=DeleteSegmentToTheFile)
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Configuració espai guardar el file
