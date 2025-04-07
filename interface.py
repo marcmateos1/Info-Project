@@ -35,9 +35,27 @@ def SaveFile():
             f.write(contingut)
         print(f"Arxiu desat a: {filepath}")
 
-    fitxer_temporal = selected_file
-    if os.path.exists(fitxer_temporal):
-        os.remove(fitxer_temporal)
+    if selected_file!="ElsMeusNodesSegments.txt":
+        fitxer_temporal = selected_file
+        if os.path.exists(fitxer_temporal):
+            os.remove(fitxer_temporal)
+
+def CarregarFicher():
+    global selected_file
+    ruta_fitxer = filedialog.askopenfilename(
+        title="Selecciona un fitxer .txt",
+        filetypes=[("Fitxers de text", "*.txt")]
+    )
+    if ruta_fitxer:
+        print("Has seleccionat:", ruta_fitxer)
+        with open(ruta_fitxer, "r", encoding="utf-8") as fitxer:
+            contingut = fitxer.read()
+            print("Contingut del fitxer:")
+            print(contingut)
+
+        selected_file="document_nou.txt"
+        with open(selected_file, "w") as f:
+            f.writelines(contingut)
 
 def showtext():
     messagebox.showinfo("Text introduït: ", entry.get())
@@ -262,6 +280,7 @@ guardat.grid(row=2,column=2,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 guardat.rowconfigure(0, weight=1)
 guardat.rowconfigure(1, weight=1)
 guardat.rowconfigure(2, weight=1)
+guardat.rowconfigure(3, weight=1)
 guardat.columnconfigure(0, weight=1)
 
 entry_file=tk.Entry(guardat)
@@ -272,5 +291,11 @@ button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 button=tk.Button(guardat, text="Guardar arxiu seleccionat", command=SaveFile)
 button.grid(row=2, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button_charge=tk.Button(guardat, text="Input", command=SelectedFile)
+button_charge.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button_charge=tk.Button(guardat, text="Carregar fichero", command=CarregarFicher)
+button_charge.grid(row=3, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 fin.mainloop()
