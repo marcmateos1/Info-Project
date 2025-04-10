@@ -141,10 +141,6 @@ def DeleteSegmentToTheFile():
     L.writelines(lineswanted)
     L.close()
 
-#def SaveGraph():
-
-
-
 
 #li donem  mida i títol a la finestra i creem les files i columnes necessàries //estructura de la finestra
 fin=tk.Tk()
