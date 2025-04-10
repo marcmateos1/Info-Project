@@ -83,7 +83,7 @@ def PlotNode(g, nameOrigin):
             color = 'red'  # Resaltar segmentos conectados al nodo origen
             dx=segment.destnode.x-segment.originnode.x
             dy=segment.destnode.y-segment.originnode.y
-            plt.arrow(segment.originnode.x,segment.originnode.y, dx ,dy, head_width=0.5, head_length=1)
+            plt.arrow(segment.originnode.x,segment.originnode.y, dx ,dy, head_width=0.5, head_length=1, length_includes_head=True)
 
         plt.plot(x_values, y_values, color=color, linewidth=1)
 
