@@ -18,8 +18,6 @@ def AddNode(g, n):
 
 def AddSegment(g, name, nameOrigin, nameDestination):
 
-    """Agrega un segmento al grafo entre dos nodos existentes.
-    También actualiza la lista de vecinos del nodo origen."""
     origin = next((node for node in g.nodes if node.name == nameOrigin), None)
     destination = next((node for node in g.nodes if node.name == nameDestination), None)
 
