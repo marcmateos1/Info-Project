@@ -1,16 +1,13 @@
 import matplotlib.pyplot as plt
-
-
+from graph import *
 class Path:
     def __init__(self):
         self.nodelist=[]
         self.totalcost=0
-        self.nomsNodes=[]
 
 def AddNodeToPath(path, node):
     if node not in path.nodelist:
         path.nodelist.append(node)
-        path.nomsNodes.append(node.name)
 
 
 def ContainsNode(path, node):
@@ -42,7 +39,8 @@ def PlotPath(graph, path):
         i=i+1
     i=0
     for elements in graph.segments:    #es un bucle for on segment es una variable que fa referencia a cadascun dels valors de la llista g.segments
-        if graph.segments[i].originnode.name in path.nomsNodes and graph.segments[i].destnode.name in path.nomsNodes:
+
+        if graph.segments[i].originnode in path.nodelist and graph.segments[i].destnode.name in path.nodelist:
             plt.plot([graph.segments[i].originnode.x,graph.segments[i].destnode.x ],[graph.segments[i].originnode.y,graph.segments[i].destnode.y ], color="blue")
 
             mid_x = (graph.segments[i].originnode.x + graph.segments[i].destnode.x) / 2
@@ -57,3 +55,7 @@ def PlotPath(graph, path):
         i=i+1
     plt.grid()
     plt.show()
+
+def ReachableNodes(graph, start_node_name):
+    start_node = get_node_by_name(graph, start_node_name)
+    return start_node.list_of_neighbours

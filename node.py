@@ -7,7 +7,6 @@ class Node:
 
 def AddNeighbour(n1,n2):
     if n2 in n1.list_of_neighbours:
-
         return False
     n1.list_of_neighbours.append(n2)
     return True

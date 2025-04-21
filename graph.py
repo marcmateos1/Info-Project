@@ -1,5 +1,6 @@
 import matplotlib.pyplot as plt
 from segment import *
+#from path import *
 
 
 class Graph:
@@ -8,6 +9,13 @@ class Graph:
         self.nodes = []
         self.segments = []
 
+def get_node_by_name(graph, name):
+    i=0
+    for elements in graph.nodes:
+        if graph.nodes[i].name==name:
+            return graph.nodes[i]
+        i=i+1
+    return None
 
 def AddNode(g, n):
     if n in g.nodes:
@@ -232,4 +240,12 @@ def CreateGraph_2():
 
     return G
 
-
+#def FindShortestPath(graph, origin, destination):
+    #current_paths=[]
+    #cami=Path()
+    #AddNodeToPath(cami, origin)
+    #current_paths.append(origin)
+    #found=False
+    #a=origin
+    #while len(current_paths)!=0 and found==False:
+        #for elements in a.list_of_neighbours:
