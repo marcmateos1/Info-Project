@@ -257,9 +257,7 @@ def CreateGraph_2():
 
     return G
 
-def ReachableNodes(graph, start_node_name):
-    start_node = get_node_by_name(graph, start_node_name)
-    return start_node.list_of_neighbours
+
 
 def FindShortestPath(graph, origin, destination):
     for nodes in graph.nodes:
