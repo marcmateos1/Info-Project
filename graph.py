@@ -1,5 +1,5 @@
 from segment import *
-from path import *
+from path import Path, AddNodeToPath, ContainsNode, PlotPath
 import matplotlib.pyplot as plt
 
 class Graph:
@@ -261,4 +261,50 @@ def ReachableNodes(graph, start_node_name):
     start_node = get_node_by_name(graph, start_node_name)
     return start_node.list_of_neighbours
 
-#def FindShortestPath(graph, origin, destination):
+def FindShortestPath(graph, origin, destination):
+    for nodes in graph.nodes:
+        if nodes.name==origin.name:
+            origin=nodes
+        elif nodes.name==destination.name:
+            destination=nodes
+
+    camins_possibles=[]
+
+    camino_inicial=Path()
+    AddNodeToPath(camino_inicial, origin)
+    camins_possibles.append(camino_inicial)
+
+    found=False
+    resultado=None
+
+    while len(camins_possibles)!=0 and found==False:
+        # Ordena caminos por coste estimado (puedes añadir atributo si quieres)
+        camins_possibles.sort(key=lambda p: len(p.nodelist))
+
+        camino_actual = camins_possibles.pop(0)  # saca el mejor camino
+        nodo_actual = camino_actual.nodelist[-1]
+
+        for vecino in nodo_actual.list_of_neighbours:
+            # Evita ciclos
+            if vecino in camino_actual.nodelist:
+                continue
+
+            nuevo_camino = camino_actual.copy()
+            AddNodeToPath(nuevo_camino, vecino)
+
+            if vecino == destination:
+                found = True
+                resultado = nuevo_camino
+                break  # terminamos
+
+            camins_possibles.append(nuevo_camino)
+
+    if found:
+        print("Camino encontrado:")
+        for nodo in resultado.nodelist:
+            print(nodo.name, end=" → ")
+        print("FIN")
+        return resultado
+    else:
+        print("No se encontró camino.")
+        return None

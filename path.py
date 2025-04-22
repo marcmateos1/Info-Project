@@ -1,9 +1,15 @@
 from graph_utils import*
+from node import Distance
 
 class Path:
     def __init__(self):
         self.nodelist=[]
         self.totalcost=0
+
+    def copy(self):
+        new_path = Path()
+        new_path.nodelist = self.nodelist.copy()  # copia la lista de nodos
+        return new_path
 
 def AddNodeToPath(path, node):
     if node not in path.nodelist:
@@ -16,15 +22,17 @@ def ContainsNode(path, node):
     return False
 
 def CostToNode(path, node):
-    if node in path.nodelist:
-        i=0
-        while i<(len(path.nodelist)-1):
-            d=Distance(path.nodelist[i], path.nodelist[i+1])
-            path.totalcost=path.totalcost+d
-            i=i+1
-        df=Distance(node, path.nodelist[-1])
-        path.totalcost=df+path.totalcost
-        return path.totalcost
+    for nodes in path.nodelist:
+        if nodes.name==node.name:
+            node=nodes
+            i = 0
+            while i < (len(path.nodelist) - 1):
+                d = Distance(path.nodelist[i], path.nodelist[i + 1])
+                path.totalcost = path.totalcost + d
+                i = i + 1
+            df = Distance(node, path.nodelist[-1])
+            path.totalcost = df + path.totalcost
+            return path.totalcost
     else:
         a=-1
         return a
