@@ -1,7 +1,6 @@
-import matplotlib.pyplot as plt
 from segment import *
-#from path import *
-
+from path import *
+import matplotlib.pyplot as plt
 
 class Graph:
     def __init__(self):
@@ -22,7 +21,6 @@ def AddNode(g, n):
         return False
     g.nodes.append(n)
     return True
-
 
 def AddSegment(g, name, nameOrigin, nameDestination):
 
@@ -114,6 +112,25 @@ def PlotNode(g, nameOrigin):
     plt.show()
 
     return True
+
+def PlotForPath(g, ax):
+    for segment in g.segments:   #es un bucle for on segment es una variable que fa referencia a cadascun dels valors de la llista g.segments
+        x_values = [segment.originnode.x, segment.destnode.x]
+        y_values = [segment.originnode.y, segment.destnode.y]
+        plt.plot(x_values, y_values, 'grey', linewidth=1)  # Dibujar el segmento
+
+        # Mostrar el costo en el centro del segmento
+        mid_x = (segment.originnode.x + segment.destnode.x) / 2
+        mid_y = (segment.originnode.y + segment.destnode.y) / 2
+        plt.text(mid_x, mid_y, f"{segment.cost:.2f}", fontsize=10, color="grey")  #la f del principi es de f-string on es pot ficaar text i variables
+                                                                                    # el .2f significa que se especifiquen dos decimals en format float de f
+    for node in g.nodes:
+        plt.scatter(node.x, node.y, color='grey', s=100)
+        plt.text(node.x, node.y, node.name, fontsize=12, color="black")
+
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
+    ax.grid(True)
 
 
 def CreateGraphFromFiles(file):
@@ -240,12 +257,8 @@ def CreateGraph_2():
 
     return G
 
+def ReachableNodes(graph, start_node_name):
+    start_node = get_node_by_name(graph, start_node_name)
+    return start_node.list_of_neighbours
+
 #def FindShortestPath(graph, origin, destination):
-    #current_paths=[]
-    #cami=Path()
-    #AddNodeToPath(cami, origin)
-    #current_paths.append(origin)
-    #found=False
-    #a=origin
-    #while len(current_paths)!=0 and found==False:
-        #for elements in a.list_of_neighbours:
