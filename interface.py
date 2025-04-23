@@ -149,6 +149,7 @@ fin.title("Interfaç gràfica V1")
 fin.columnconfigure(0, weight=1)
 fin.columnconfigure(1, weight=1)
 fin.columnconfigure(2, weight=1)
+fin.columnconfigure(3,weight=1)
 fin.rowconfigure(0, weight=1)
 fin.rowconfigure(1, weight=1)
 fin.rowconfigure(2, weight=1)
@@ -270,7 +271,7 @@ button=tk.Button(inputdeletesegment, text="Input", command=DeleteSegmentToTheFil
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Configuració espai guardar el file
-guardat=tk.LabelFrame(fin,text="Selecciona ficher")
+guardat=tk.LabelFrame(fin,text="Selecciona fitxer")
 guardat.grid(row=2,column=2,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 
 guardat.rowconfigure(0, weight=1)
@@ -294,4 +295,46 @@ button_charge.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + 
 button_charge=tk.Button(guardat, text="Carregar fichero", command=CarregarFicher)
 button_charge.grid(row=3, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
+#configuracio triar node per reachability
+reach=tk.LabelFrame(fin,text="Tria node(Reachability)")
+reach.grid(row=0,column=3,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+
+reach.rowconfigure(0, weight=1)
+reach.rowconfigure(1, weight=1)
+reach.columnconfigure(0, weight=1)
+
+entry=tk.Entry(reach)
+entry.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button=tk.Button(reach, text="Input", command=showtext)
+button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+
+#configuracio node inici spath
+inici=tk.LabelFrame(fin,text="Tria node d'inici (Shortest path)")
+inici.grid(row=1,column=3,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+
+inici.rowconfigure(0, weight=1)
+inici.rowconfigure(1, weight=1)
+inici.columnconfigure(0, weight=1)
+
+entry=tk.Entry(inici)
+entry.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button=tk.Button(inici, text="Input", command=showtext)
+button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+#configuracio node final spath
+final=tk.LabelFrame(fin,text="Tria node final (Shortest path)")
+final.grid(row=2,column=3,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+
+final.rowconfigure(0, weight=1)
+final.rowconfigure(1, weight=1)
+final.columnconfigure(0, weight=1)
+
+entry=tk.Entry(final)
+entry.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button=tk.Button(final, text="Input", command=showtext)
+button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 fin.mainloop()
