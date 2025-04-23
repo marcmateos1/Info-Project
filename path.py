@@ -58,4 +58,3 @@ def PlotPath(graph, path):
     ax.set_title("Camí seleccionat")
     plt.show()
 
-

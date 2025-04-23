@@ -257,6 +257,70 @@ def CreateGraph_2():
 
     return G
 
+def Reachability(graph, nodename):
+    for node in graph.nodes:
+        if nodename==node.name:
+            origin=node
+            break
+    i=0
+
+    found=False
+    while i<len(graph.nodes):
+        if graph.nodes[i]==origin:
+            found=True
+        i=i+1
+    i=i-1
+    if found:
+        reach=[origin]
+        new=True
+        while new:
+            new=False
+            for node in reach:
+                for vecino in node.list_of_neighbours:
+                    if vecino not in reach:
+                        reach.append(vecino)
+                        new=True
+        print(reach[0].name)
+        return reach
+
+
+
+def Plot_All_Paths(graph, reachable_nodes):
+    fig, ax = plt.subplots()
+    PlotForPath(graph, ax)
+    origin=reachable_nodes[0]
+    def AddPossiblePaths(graph, reachable_nodes):
+        i = 1
+        all_paths = []
+        while i < len(reachable_nodes):
+            n = FindShortestPath(graph, reachable_nodes[0], reachable_nodes[i])
+            all_paths.append(n)
+            i = i + 1
+        return all_paths
+
+    all_paths=AddPossiblePaths(graph, reachable_nodes)
+
+    PlotForPath(graph,ax)
+    for nodes in reachable_nodes:
+        plt.scatter(nodes.x,nodes.y, color="blue", s=100)
+    for path in all_paths:
+        for i in range(len(path.nodelist)-1):
+            n1 = path.nodelist[i]
+            n2 = path.nodelist[i + 1]
+            ax.plot([n1.x, n2.x], [n1.y, n2.y], color="green", linewidth=2)
+
+            for segment in graph.segments:
+                if segment.originnode.name == n1.name and segment.destnode.name == n2.name:
+                    mid_x = (segment.originnode.x + segment.destnode.x) / 2
+                    mid_y = (segment.originnode.y + segment.destnode.y) / 2
+                    plt.text(mid_x, mid_y, f"{segment.cost:.2f}", fontsize=10, color="blue")
+
+                    dx = segment.destnode.x - segment.originnode.x
+                    dy = segment.destnode.y - segment.originnode.y
+                    plt.arrow(segment.originnode.x, segment.originnode.y, dx, dy, head_width=0.5, head_length=1,
+                              length_includes_head=True, color="green")
+    plt.scatter(origin.x, origin.y, color="red", s=100)
+    plt.show()
 
 
 def FindShortestPath(graph, origin, destination):
