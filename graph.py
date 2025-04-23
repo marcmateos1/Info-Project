@@ -320,6 +320,7 @@ def Plot_All_Paths(graph, reachable_nodes):
                     plt.arrow(segment.originnode.x, segment.originnode.y, dx, dy, head_width=0.5, head_length=1,
                               length_includes_head=True, color="green")
     plt.scatter(origin.x, origin.y, color="red", s=100)
+    plt.title("Reachability map")
     plt.show()
 
 
