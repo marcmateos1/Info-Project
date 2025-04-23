@@ -141,6 +141,13 @@ def DeleteSegmentToTheFile():
     L.writelines(lineswanted)
     L.close()
 
+def reachability():
+
+def inicisPath():
+
+
+def finalsPath():
+
 
 #li donem  mida i títol a la finestra i creem les files i columnes necessàries //estructura de la finestra
 fin=tk.Tk()
@@ -306,7 +313,7 @@ reach.columnconfigure(0, weight=1)
 entry=tk.Entry(reach)
 entry.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
-button=tk.Button(reach, text="Input", command=showtext)
+button=tk.Button(reach, text="Input", command=reachability)
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 
@@ -321,7 +328,7 @@ inici.columnconfigure(0, weight=1)
 entry=tk.Entry(inici)
 entry.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
-button=tk.Button(inici, text="Input", command=showtext)
+button=tk.Button(inici, text="Input", command=inicisPath)
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #configuracio node final spath
@@ -335,6 +342,6 @@ final.columnconfigure(0, weight=1)
 entry=tk.Entry(final)
 entry.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
-button=tk.Button(final, text="Input", command=showtext)
+button=tk.Button(final, text="Input", command=finalsPath)
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 fin.mainloop()
