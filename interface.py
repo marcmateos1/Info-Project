@@ -4,6 +4,10 @@ from tkinter import messagebox
 import os
 from tkinter import filedialog
 
+origin_reachability=None
+origin_shortest=None
+dest_shortest=None
+
 selected_file="ElsMeusNodesSegments.txt"
 
 def SelectedFile():
@@ -131,6 +135,26 @@ def DeleteSegmentToTheFile():
     L = open(selected_file, "w")
     L.writelines(lineswanted)
     L.close()
+
+def FindReachability():
+    global origin_reachability
+    messagebox.showinfo("Text introduït: ", entry_segment.get())
+    origin_reachability=entry_segment.get()
+
+def ShowReachability():
+    G = CreateGraph_1()
+    Reachability(G, origin_reachability)
+
+#def NodesForShortestPath():
+    #global origin_shortest, dest_shortest
+    #messagebox.showinfo("Text introduït: ", entry_segment.get())
+    #info=entry_segment.get().split(" ")
+    #origin_shortest=info.[0]
+    #dest_shortest=info.[1]
+
+def ShowShortest():
+    G=CreateGraph_1()
+    FindShortestPath(G, origin_shortest, origin_shortest)
 
 #def SaveGraph():
 
