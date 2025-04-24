@@ -281,11 +281,11 @@ def Plot_All_Paths(graph, reachable_nodes):
     plt.show()
 
 
-def FindShortestPath(graph, origin, destination):
+def FindShortestPath(graph, originname, destinationname):
     for nodes in graph.nodes:
-        if nodes.name==origin.name:
+        if nodes.name==originname:
             origin=nodes
-        elif nodes.name==destination.name:
+        elif nodes.name==destinationname:
             destination=nodes
 
     camins_possibles=[]

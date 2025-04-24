@@ -138,26 +138,28 @@ def DeleteSegmentToTheFile():
 
 def FindReachability():
     global origin_reachability
-    messagebox.showinfo("Text introduït: ", entry_segment.get())
-    origin_reachability=entry_segment.get()
+    messagebox.showinfo("Text introduït: ", entry_nou.get())
+    origin_reachability=entry_nou.get()
 
 def ShowReachability():
     G = CreateGraph_1()
-    Reachability(G, origin_reachability)
+    print(f"Hola {origin_reachability}")
+    n=Reachability(G, origin_reachability)
+    Plot_All_Paths(G,n)
 
-#def NodesForShortestPath():
-    #global origin_shortest, dest_shortest
-    #messagebox.showinfo("Text introduït: ", entry_segment.get())
-    #info=entry_segment.get().split(" ")
-    #origin_shortest=info.[0]
-    #dest_shortest=info.[1]
+def NodesForShortestPath():
+    global origin_shortest, dest_shortest
+    messagebox.showinfo("Text introduït: ", entry_reach.get())
+    info=entry_reach.get().split(" ")
+    print(info)
+    origin_shortest=info[0]
+    dest_shortest=info[1]
 
 def ShowShortest():
     G=CreateGraph_1()
-    FindShortestPath(G, origin_shortest, origin_shortest)
-
-#def SaveGraph():
-
+    n=FindShortestPath(G, origin_shortest, origin_shortest)
+    print(n)
+    PlotPath(G,n)
 
 #li donem  mida i títol a la finestra i creem les files i columnes necessàries //estructura de la finestra
 fin=tk.Tk()
@@ -187,10 +189,10 @@ button1.grid(row=0, column=0, padx=4, pady=4, sticky=tk.N + tk.E + tk.W + tk.S)
 button2=tk.Button(graficsexemple, text="Grafo amb veïns", command=showgrafoexemple_vaeïns)
 button2.grid(row=1, column=0, padx=4, pady=4, sticky=tk.N + tk.E + tk.W + tk.S)
 
-button3=tk.Button(graficsexemple, text="Reachablity Map", command=showgrafoexemple)
+button3=tk.Button(graficsexemple, text="Reachablity Map", command=ShowReachability)
 button3.grid(row=2, column=0, padx=4, pady=4, sticky=tk.N + tk.E + tk.W + tk.S)
 
-button4=tk.Button(graficsexemple, text="Shortest Path", command=showgrafoexemple_vaeïns)
+button4=tk.Button(graficsexemple, text="Shortest Path", command=ShowShortest)
 button4.grid(row=3, column=0, padx=4, pady=4, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Configuració espai grafics del arxiu text
@@ -212,9 +214,30 @@ button2.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 button3=tk.Button(grafictext, text="Reachablity Map", command=showgrafoexemple)
 button3.grid(row=2, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
-button4=tk.Button(grafictext, text="Shortest Path", command=showgrafoexemple_vaeïns)
+button4=tk.Button(grafictext, text="Shortest Path", command=ShowShortest)
 button4.grid(row=3, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
+#Inputs Reachability and Shortest
+nou=tk.LabelFrame(fin,text="Inputs Reachability and Shortest")
+nou.grid(row=2,column=0,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
+
+nou.rowconfigure(0, weight=1)
+nou.rowconfigure(1, weight=1)
+nou.rowconfigure(2, weight=1)
+nou.rowconfigure(3, weight=1)
+nou.columnconfigure(0, weight=1)
+
+entry_nou=tk.Entry(nou)
+entry_nou.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button=tk.Button(nou, text="Input Reachability (name origin)", command=FindReachability)
+button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+entry_reach=tk.Entry(nou)
+entry_reach.grid(row=2, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button=tk.Button(nou, text="Input Shortest (origin/dest)", command=NodesForShortestPath)
+button.grid(row=3, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Configuració espai pels input buscar node
 inputframe=tk.LabelFrame(fin,text="Tria del node d'origen:")

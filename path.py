@@ -23,7 +23,7 @@ def ContainsNode(path, node):
 
 def CostToNode(path, node):
     for nodes in path.nodelist:
-        if nodes.name==node.name:
+        if nodes.name==node:
             node=nodes
             i = 0
             while i < (len(path.nodelist) - 1):
