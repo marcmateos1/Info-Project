@@ -199,6 +199,8 @@ grafictext.grid(row=1,column=0,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 
 grafictext.rowconfigure(0, weight=1)
 grafictext.rowconfigure(1, weight=1)
+grafictext.rowconfigure(2, weight=1)
+grafictext.rowconfigure(3, weight=1)
 grafictext.columnconfigure(0, weight=1)
 
 button1=tk.Button(grafictext, text="Mapa grafo", command=showgrafofromfiles)
@@ -206,6 +208,12 @@ button1.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 button2=tk.Button(grafictext, text="Grafo amb veïns", command=showgrafofromfiles_veins)
 button2.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button3=tk.Button(grafictext, text="Reachablity Map", command=showgrafoexemple)
+button3.grid(row=2, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
+
+button4=tk.Button(grafictext, text="Shortest Path", command=showgrafoexemple_vaeïns)
+button4.grid(row=3, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 
 #Configuració espai pels input buscar node
