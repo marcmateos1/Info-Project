@@ -143,12 +143,12 @@ def FindReachability():
 
 def ShowReachability():
     G = CreateGraph_1()
-    print(f"Hola {origin_reachability}")
     n=Reachability(G, origin_reachability)
     Plot_All_Paths(G,n)
 
 def NodesForShortestPath():
-    global origin_shortest, dest_shortest
+    global origin_shortest
+    global dest_shortest
     messagebox.showinfo("Text introduït: ", entry_reach.get())
     info=entry_reach.get().split(" ")
     print(info)
@@ -157,9 +157,20 @@ def NodesForShortestPath():
 
 def ShowShortest():
     G=CreateGraph_1()
-    n=FindShortestPath(G, origin_shortest, origin_shortest)
+    n=FindShortestPath(G, origin_shortest, dest_shortest)
     print(n)
     PlotPath(G,n)
+
+def ShowShortestForFiles():
+    G=CreateGraphFromFiles(selected_file)
+    n=FindShortestPath(G, origin_shortest, dest_shortest)
+    PlotPath(G,n)
+
+def ShowReachablityForFiles():
+    G = CreateGraphFromFiles(selected_file)
+    n = Reachability(G, origin_reachability)
+    Plot_All_Paths(G, n)
+
 
 #li donem  mida i títol a la finestra i creem les files i columnes necessàries //estructura de la finestra
 fin=tk.Tk()
@@ -211,10 +222,10 @@ button1.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 button2=tk.Button(grafictext, text="Grafo amb veïns", command=showgrafofromfiles_veins)
 button2.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
-button3=tk.Button(grafictext, text="Reachablity Map", command=showgrafoexemple)
+button3=tk.Button(grafictext, text="Reachablity Map", command=ShowReachablityForFiles)
 button3.grid(row=2, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
-button4=tk.Button(grafictext, text="Shortest Path", command=ShowShortest)
+button4=tk.Button(grafictext, text="Shortest Path", command=ShowShortestForFiles)
 button4.grid(row=3, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Inputs Reachability and Shortest

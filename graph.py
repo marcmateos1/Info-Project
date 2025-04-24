@@ -214,6 +214,49 @@ def CreateGraph_1():
     return G
 
 
+def CreateGraph_2():
+    G = Graph()
+    AddNode(G, Node("A", 3, 26))
+    AddNode(G, Node("B", 27, 18))
+    AddNode(G, Node("C", 2, 10))
+    AddNode(G, Node("D", 23, 26))
+    AddNode(G, Node("E", 12, 24))
+    AddNode(G, Node("F", 3, 4))
+    AddNode(G, Node("G", 10, 8))
+    AddNode(G, Node("H", 21, 3))
+    AddNode(G, Node("I", 17, 17))
+    AddNode(G, Node("J", 4, 30))
+    AddNode(G, Node("K", 23, 22))
+    AddNode(G, Node("L", 5, 17))
+
+    AddSegment(G, "AB", "A", "B")
+    AddSegment(G, "AE", "A", "E")
+    AddSegment(G, "AK", "A", "K")
+    AddSegment(G, "BA", "B", "A")
+    AddSegment(G, "BC", "B", "C")
+    AddSegment(G, "BF", "B", "F")
+    AddSegment(G, "BK", "B", "K")
+    AddSegment(G, "BG", "B", "G")
+    AddSegment(G, "CD", "C", "D")
+    AddSegment(G, "CG", "C", "G")
+    AddSegment(G, "DG", "D", "G")
+    AddSegment(G, "DH", "D", "H")
+    AddSegment(G, "DI", "D", "I")
+    AddSegment(G, "EF", "E", "F")
+    AddSegment(G, "FL", "F", "L")
+    AddSegment(G, "GB", "G", "B")
+    AddSegment(G, "GF", "G", "F")
+    AddSegment(G, "GH", "G", "H")
+    AddSegment(G, "ID", "I", "D")
+    AddSegment(G, "IJ", "I", "J")
+    AddSegment(G, "JI", "J", "I")
+    AddSegment(G, "KA", "K", "A")
+    AddSegment(G, "KL", "K", "L")
+    AddSegment(G, "LK", "L", "K")
+    AddSegment(G, "LF", "L", "F")
+
+    return G
+
 def Reachability(graph, nodename):
     for node in graph.nodes:
         if nodename==node.name:
@@ -277,15 +320,14 @@ def Plot_All_Paths(graph, reachable_nodes):
                     plt.arrow(segment.originnode.x, segment.originnode.y, dx, dy, head_width=0.5, head_length=1,
                               length_includes_head=True, color="green")
     plt.scatter(origin.x, origin.y, color="red", s=100)
-    plt.title("Reachability map")
     plt.show()
 
 
-def FindShortestPath(graph, originname, destinationname):
+def FindShortestPath(graph, origin, destination):
     for nodes in graph.nodes:
-        if nodes.name==originname:
+        if nodes.name==origin:
             origin=nodes
-        elif nodes.name==destinationname:
+        elif nodes.name==destination:
             destination=nodes
 
     camins_possibles=[]
