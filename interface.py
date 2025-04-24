@@ -177,6 +177,8 @@ graficsexemple.grid(row=0,column=0,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + t
 
 graficsexemple.rowconfigure(0, weight=1)
 graficsexemple.rowconfigure(1, weight=1)
+graficsexemple.rowconfigure(2, weight=1)
+graficsexemple.rowconfigure(3, weight=1)
 graficsexemple.columnconfigure(0, weight=1)
 
 button1=tk.Button(graficsexemple, text="Mapa grafo", command=showgrafoexemple)
