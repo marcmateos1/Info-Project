@@ -35,27 +35,9 @@ def SaveFile():
             f.write(contingut)
         print(f"Arxiu desat a: {filepath}")
 
-    if selected_file!="ElsMeusNodesSegments.txt":
-        fitxer_temporal = selected_file
-        if os.path.exists(fitxer_temporal):
-            os.remove(fitxer_temporal)
-
-def CarregarFicher():
-    global selected_file
-    ruta_fitxer = filedialog.askopenfilename(
-        title="Selecciona un fitxer .txt",
-        filetypes=[("Fitxers de text", "*.txt")]
-    )
-    if ruta_fitxer:
-        print("Has seleccionat:", ruta_fitxer)
-        with open(ruta_fitxer, "r", encoding="utf-8") as fitxer:
-            contingut = fitxer.read()
-            print("Contingut del fitxer:")
-            print(contingut)
-
-        selected_file="document_nou.txt"
-        with open(selected_file, "w") as f:
-            f.writelines(contingut)
+    fitxer_temporal = selected_file
+    if os.path.exists(fitxer_temporal):
+        os.remove(fitxer_temporal)
 
 def showtext():
     messagebox.showinfo("Text introduït: ", entry.get())
@@ -141,12 +123,9 @@ def DeleteSegmentToTheFile():
     L.writelines(lineswanted)
     L.close()
 
-def reachability():
-
-def inicisPath():
+#def SaveGraph():
 
 
-def finalsPath():
 
 
 #li donem  mida i títol a la finestra i creem les files i columnes necessàries //estructura de la finestra
@@ -156,7 +135,6 @@ fin.title("Interfaç gràfica V1")
 fin.columnconfigure(0, weight=1)
 fin.columnconfigure(1, weight=1)
 fin.columnconfigure(2, weight=1)
-fin.columnconfigure(3,weight=1)
 fin.rowconfigure(0, weight=1)
 fin.rowconfigure(1, weight=1)
 fin.rowconfigure(2, weight=1)
@@ -278,13 +256,12 @@ button=tk.Button(inputdeletesegment, text="Input", command=DeleteSegmentToTheFil
 button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
 #Configuració espai guardar el file
-guardat=tk.LabelFrame(fin,text="Selecciona fitxer")
+guardat=tk.LabelFrame(fin,text="Selecciona ficher")
 guardat.grid(row=2,column=2,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
 
 guardat.rowconfigure(0, weight=1)
 guardat.rowconfigure(1, weight=1)
 guardat.rowconfigure(2, weight=1)
-guardat.rowconfigure(3, weight=1)
 guardat.columnconfigure(0, weight=1)
 
 entry_file=tk.Entry(guardat)
@@ -296,52 +273,4 @@ button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 button=tk.Button(guardat, text="Guardar arxiu seleccionat", command=SaveFile)
 button.grid(row=2, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 
-button_charge=tk.Button(guardat, text="Input", command=SelectedFile)
-button_charge.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
-
-button_charge=tk.Button(guardat, text="Carregar fichero", command=CarregarFicher)
-button_charge.grid(row=3, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
-
-#configuracio triar node per reachability
-reach=tk.LabelFrame(fin,text="Tria node(Reachability)")
-reach.grid(row=0,column=3,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
-
-reach.rowconfigure(0, weight=1)
-reach.rowconfigure(1, weight=1)
-reach.columnconfigure(0, weight=1)
-
-entry=tk.Entry(reach)
-entry.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
-
-button=tk.Button(reach, text="Input", command=reachability)
-button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
-
-
-#configuracio node inici spath
-inici=tk.LabelFrame(fin,text="Tria node d'inici (Shortest path)")
-inici.grid(row=1,column=3,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
-
-inici.rowconfigure(0, weight=1)
-inici.rowconfigure(1, weight=1)
-inici.columnconfigure(0, weight=1)
-
-entry=tk.Entry(inici)
-entry.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
-
-button=tk.Button(inici, text="Input", command=inicisPath)
-button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
-
-#configuracio node final spath
-final=tk.LabelFrame(fin,text="Tria node final (Shortest path)")
-final.grid(row=2,column=3,pady=10,padx=10,sticky=tk.N + tk.E + tk.W + tk.S)
-
-final.rowconfigure(0, weight=1)
-final.rowconfigure(1, weight=1)
-final.columnconfigure(0, weight=1)
-
-entry=tk.Entry(final)
-entry.grid(row=0, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
-
-button=tk.Button(final, text="Input", command=finalsPath)
-button.grid(row=1, column=0, padx=5, pady=5, sticky=tk.N + tk.E + tk.W + tk.S)
 fin.mainloop()

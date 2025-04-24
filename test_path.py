@@ -25,5 +25,5 @@ G=CreateGraph_1()
 #print(CostToNode(l,n2))
 
 #print(Reachability(G,"A"))
-n=Reachability(G, "A")
+n=Reachability(G, "F")
 Plot_All_Paths(G,n)
