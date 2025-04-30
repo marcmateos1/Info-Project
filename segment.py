@@ -11,4 +11,4 @@ class Segment:
         "Devuelve una representación en cadena del segmento."
         return f"Segmento {self.name}: {self.originnode.name} -> {self.destnode.name}, Cost: {self.cost:.2f}"
 
-    
+

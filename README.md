@@ -8,4 +8,4 @@ Versió 2
 Generator 
 Verifier 
 Video Marc Mateos
-URL video: 
+URL video: https://youtu.be/iQX0TM4D-TU
