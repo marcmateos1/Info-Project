@@ -15,6 +15,7 @@ def LoadNavPoints(file, airspace):
         trozos=line.rstrip().split()
         navpoint=NavPoint(trozos[0], trozos[1], trozos[2], trozos[3])
         airspace.list_navpoints.append(navpoint)
+        line=F.readline
     F.close()
 
 def LoadNavSegments(file, airspace):
@@ -24,6 +25,7 @@ def LoadNavSegments(file, airspace):
         trozos = line.rstrip().split()
         navseg = NavSegment(trozos[0], trozos[1], trozos[2])
         airspace.list_navsegments.append(navseg)
+        line=F.readline()
     F.close()
 
 def LoadAirports(file,airspace):
