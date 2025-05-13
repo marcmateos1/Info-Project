@@ -149,3 +149,20 @@ def NeighboursMap(airspace, origen):
     plt.title(f"Mapa Espai Aeri -- Veïns de {origen}")
     plt.grid()
     plt.show()
+
+def ShowShortestMap(airspace, origen, destino):
+    nav_origen=None
+    nav_destino=None
+
+    for navpoint in airspace.list_navpoints:
+        if navpoint.name==origen:
+            nav_origen=navpoint
+            break
+
+    for navpoint in airspace.list_navpoints:
+        if navpoint.name == destino:
+            nav_destino = navpoint
+            break
+    if nav_origen==None or nav_destino==None:
+        return None
+
