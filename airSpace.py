@@ -95,3 +95,57 @@ def PlotMap(airspace):
     plt.title(f"Mapa Espai Aeri")
     plt.grid()
     plt.show()
+
+def NeighboursMap(airspace, origen):
+    nav_buscat=None
+    for navpoint in airspace.list_navpoints:
+        if navpoint.name==origen:
+            nav_buscat=navpoint
+            break
+    if nav_buscat==None:
+        return None
+
+    for navpoint in airspace.list_navpoints:
+        plt.scatter(navpoint.longitud, navpoint.latitud, color="grey", s=10)
+        plt.text(navpoint.longitud, navpoint.latitud, navpoint.name, fontsize=6, color="black")
+
+
+    plt.scatter(nav_buscat.longitud, nav_buscat.latitud, color="blue", s=10)
+
+    for segment in airspace.list_navsegments:
+
+        found_origin=False
+        found_dest=False
+
+        for navpoints in airspace.list_navpoints:
+            if navpoints.number==segment.originnumber:
+                originnav=navpoints
+                found_origin=True
+
+            elif navpoints.number==segment.destnumber:
+                destnav=navpoints
+                found_dest=True
+
+            elif found_dest==True and found_origin==True:
+                break
+
+        if originnav==nav_buscat:
+            longitud_values = [originnav.longitud, destnav.longitud]
+            latitud_values = [originnav.latitud, destnav.latitud]
+            plt.plot(longitud_values, latitud_values, color="purple", linewidth=1)
+
+            mid_x = (originnav.longitud + destnav.longitud) / 2
+            mid_y = (originnav.latitud + destnav.latitud) / 2
+            plt.text(mid_x, mid_y, f"{segment.distance:.2f}", fontsize=5, color="black")
+
+            dx = destnav.longitud - originnav.longitud
+            dy = destnav.latitud - originnav.latitud
+            scale = 0.95
+            plt.arrow(originnav.longitud, originnav.latitud, dx * scale, dy * scale, length_includes_head=True,
+                      head_width=0.02, head_length=0.02, fc="purple", ec="purple",)
+
+    plt.xlabel("X")
+    plt.ylabel("Y")
+    plt.title(f"Mapa Espai Aeri -- Veïns de {origen}")
+    plt.grid()
+    plt.show()

@@ -7,3 +7,4 @@ LoadNavAirports("cat_aer.txt", g)
 print("Hola2")
 
 PlotMap(g)
+NeighboursMap(g, "GODOX")
