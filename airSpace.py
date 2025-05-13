@@ -29,21 +29,26 @@ def LoadNavSegments(file, airspace):
     F.close()
 
 def LoadNavAirports(file,airspace):
-    mateixAer=None
-    noms=[]
     F=open(file, "r")
-    for line in F:
-        line=line.strip()
+    line=F.readline()
+    while line!="":
         if line.startswith("LE") and len(line)==4:
-            if mateixAer:
-                noms.append(mateixAer)
-            mateixAer=NavAirport(line)
-        if line.endswith(".D"):
-            mateixAer.sid.append(line)
-        elif line.endswith(".A"):
-            mateixAer.star.append(line)
-    if mateixAer:
-        noms.append(mateixAer)
-    return(noms)
+            nom=""
+            sids=[]
+            stars=[]
+            nom=line
+            line=F.readline()
+            while not line.startswith("LE"):
+                if line.endswith(".D"):
+                    sids.append(line)
+                elif line.endswith(".A"):
+                    stars.append(line)
+                line=F.readline()
+            navair=NavAirport(nom,sids,stars)
+            airspace.list_navairports.append(navair)
+            line=F.readline()
+        line=F.readline()
+
+
 
 
