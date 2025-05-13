@@ -1,6 +1,8 @@
 from navAirpoint import NavAirport
 from navPoint import NavPoint
 from navSegment import NavSegment
+import matplotlib.pyplot as plt
+
 
 class AirSpace:
     def __init__(self):
@@ -33,7 +35,6 @@ def LoadNavAirports(file,airspace):
     line=F.readline()
     while line!="":
         if line.startswith("LE") and len(line)==4:
-            nom=""
             sids=[]
             stars=[]
             nom=line
@@ -46,9 +47,11 @@ def LoadNavAirports(file,airspace):
                 line=F.readline()
             navair=NavAirport(nom,sids,stars)
             airspace.list_navairports.append(navair)
-            line=F.readline()
-        line=F.readline()
+            #line=F.readline()
+        #line=F.readline()
 
-
-
-
+def PlotCat(airspace):
+    for navpoint in airspace.list_navpoints:
+        plt.scatter(navpoint.longitud, navpoint.latitud, color="blue", s=100)
+        plt.text(navpoint.longitud, navpoint.latitud, navpoint.name, fontsize=12, color="black")
+    plt.show()
