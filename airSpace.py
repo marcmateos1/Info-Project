@@ -1,3 +1,5 @@
+from sunau import Au_read
+
 from navAirpoint import NavAirport
 from navPoint import NavPoint
 from navSegment import NavSegment
@@ -19,7 +21,7 @@ def LoadNavPoints(file, airspace):
     F.close()
 
 def LoadNavSegments(file, airspace):
-    F = open(file, "r")
+    F = open("cat_seg.txt", "r")
     line = F.readline()
     while line != "":
         trozos = line.rstrip().split()
@@ -28,6 +30,22 @@ def LoadNavSegments(file, airspace):
         line=F.readline()
     F.close()
 
-def LoadAirports(file,airspace):
-    F=open(file, "r")
-    #falta
+def LoadNavAirports(file,airspace):
+    mateixAer=None
+    noms=[]
+    F=open("cat_aer.txt", "r")
+    for line in F:
+        line=line.strip()
+        if line.startswith("LE") and len(line)==4:
+            if mateixAer:
+                noms.append(mateixAer)
+            mateixAer=NavAirport(line)
+        if line.endswith(".D"):
+            mateixAer.sid.append(line)
+        elif line.endswith(".A"):
+            mateixAer.star.append(line)
+    if mateixAer:
+        noms.append(mateixAer)
+    return(noms)
+
+
