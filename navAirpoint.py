@@ -1,5 +1,5 @@
 class NavAirport:
-    def __init__(self, name):
+    def __init__(self, name, sids:list, stars:list):
         self.name=name
-        self.sid=[] #llista departure NavPoints .D
-        self.star=[] #llista arrival navpoints .A
+        self.sids=sids #llista departure NavPoints .D
+        self.stars=stars #llista arrival navpoints .A
