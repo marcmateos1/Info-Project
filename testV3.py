@@ -1,8 +1,9 @@
 from airSpace import*
-
+print("Hola1")
 g=AirSpace()
-LoadNavAirports("cat_aer.txt", g)
-LoadNavSegments("cat_seg.txt", g)
 LoadNavPoints("cat_nav", g)
+LoadNavSegments("cat_seg.txt", g)
+LoadNavAirports("cat_aer.txt", g)
+print("Hola2")
 
-PlotCat(g)
+PlotMap(g)
