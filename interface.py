@@ -54,8 +54,8 @@ def CarregarFicher():
         print("Has seleccionat:", ruta_fitxer)
         with open(ruta_fitxer, "r", encoding="utf-8") as fitxer:
             contingut = fitxer.read()
-            print("Contingut del fitxer:")
-            print(contingut)
+            #print("Contingut del fitxer:")
+            #print(contingut)
 
         selected_file="document_nou.txt"
         with open(selected_file, "w") as f:

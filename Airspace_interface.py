@@ -22,11 +22,12 @@ def LoadFileAER():
     )
     if ruta_fitxerAER:
         print("Has seleccionat:", ruta_fitxerAER)
-        fileAER=ruta_fitxerAER
         with open(ruta_fitxerAER, "r", encoding="utf-8") as fitxer:
             contingut = fitxer.read()
-            print("Contingut del fitxer:")
-            print(contingut)
+        fileAER="new_data_AER.txt"
+        with open(fileAER, "w") as f:
+            f.writelines(contingut)
+
 
 def LoadFileNAV():
     global fileNAV
@@ -36,11 +37,11 @@ def LoadFileNAV():
     )
     if ruta_fitxerNAV:
         print("Has seleccionat:", ruta_fitxerNAV)
-        fileNAV=ruta_fitxerNAV
         with open(ruta_fitxerNAV, "r", encoding="utf-8") as fitxer:
             contingut = fitxer.read()
-            print("Contingut del fitxer:")
-            print(contingut)
+        fileNAV="new_data_NAV.txt"
+        with open(fileNAV, "w") as f:
+            f.writelines(contingut)
 
 
 def LoadFileSEG():
@@ -51,11 +52,11 @@ def LoadFileSEG():
     )
     if ruta_fitxerSEG:
         print("Has seleccionat:", ruta_fitxerSEG)
-        fileSEG=ruta_fitxerSEG
         with open(ruta_fitxerSEG, "r", encoding="utf-8") as fitxer:
             contingut = fitxer.read()
-            print("Contingut del fitxer:")
-            print(contingut)
+        fileSEG="new_data_SEG.txt"
+        with open(fileSEG, "w") as f:
+            f.writelines(contingut)
 
 
 def CarregarDades():
