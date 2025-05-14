@@ -10,7 +10,9 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 #LoadNavSegments("cat_seg.txt", g)
 #LoadNavAirports("cat_aer.txt", g)
 #per posar el graf dins l'interfaç, importem el FigureCanvasTkAgg
-
+fileAER="cat_aer.txt"
+fileNAV="cat_nav"
+fileSEG="cat_seg.txt"
 
 def LoadFileAER():
     global fileAER
@@ -102,10 +104,11 @@ def ShowSPath():
     for widget in right_frame.winfo_children():
         widget.destroy()
     path=FindShortestMap(g,SP_origin,SP_dest)
-    figSP=PlotShortestPath(g,path)
-    grafSP=FigureCanvasTkAgg(figSP,master=right_frame)
-    grafSP.draw()
-    grafSP.get_tk_widget().pack(fill="both",expand=True)
+    if path!=None:
+        figSP=PlotShortestPath(g,path)
+        grafSP=FigureCanvasTkAgg(figSP,master=right_frame)
+        grafSP.draw()
+        grafSP.get_tk_widget().pack(fill="both",expand=True)
 
 #Mida
 root=tk.Tk()
