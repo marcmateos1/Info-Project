@@ -6,5 +6,5 @@ LoadNavSegments("cat_seg.txt", g)
 LoadNavAirports("cat_aer.txt", g)
 print("Hola2")
 
-#PlotMap(g)
-#NeighboursMap(g, "GODOX")
+PlotMap(g)
+NeighboursMap(g, "GODOX")

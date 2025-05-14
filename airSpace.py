@@ -2,6 +2,7 @@ from navAirpoint import NavAirport
 from navPoint import NavPoint
 from navSegment import NavSegment
 import matplotlib.pyplot as plt
+from matplotlib.figure import Figure
 
 
 class AirSpace:
@@ -54,9 +55,11 @@ def LoadNavAirports(file,airspace):
             i += 1
 
 def PlotMap(airspace):
+    fig=Figure()
+    ax=fig.add_subplot(111)
     for navpoint in airspace.list_navpoints:
-        plt.scatter(navpoint.longitud, navpoint.latitud, color="blue", s=10)
-        plt.text(navpoint.longitud, navpoint.latitud, navpoint.name, fontsize=6, color="black")
+        ax.scatter(navpoint.longitud, navpoint.latitud, color="blue", s=10)
+        ax.text(navpoint.longitud, navpoint.latitud, navpoint.name, fontsize=6, color="black")
 
     for segment in airspace.list_navsegments:
 
@@ -81,22 +84,25 @@ def PlotMap(airspace):
 
         mid_x = (originnav.longitud + destnav.longitud) / 2
         mid_y = (originnav.latitud + destnav.latitud) / 2
-        plt.text(mid_x, mid_y, f"{segment.distance:.2f}", fontsize=5, color="black")
+        ax.text(mid_x, mid_y, f"{segment.distance:.2f}", fontsize=5, color="black")
 
         dx=destnav.longitud-originnav.longitud
         dy=destnav.latitud-originnav.latitud
         scale=0.95
-        plt.arrow(originnav.longitud, originnav.latitud, dx*scale, dy*scale, length_includes_head=True, head_width=0.02, head_length=0.02, fc="purple", ec="purple", linewidth=0.5)
+        ax.arrow(originnav.longitud, originnav.latitud, dx*scale, dy*scale, length_includes_head=True, head_width=0.02, head_length=0.02, fc="purple", ec="purple", linewidth=0.5)
 
 
 
-    plt.xlabel("X")
-    plt.ylabel("Y")
-    plt.title(f"Mapa Espai Aeri")
-    plt.grid()
-    plt.show()
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
+    ax.set_title("Mapa Espai Aeri")
+    ax.grid(True)
+
+    return fig
 
 def NeighboursMap(airspace, origen):
+    fig=Figure()
+    ax=fig.add_subplot(111)
     nav_buscat=None
     for navpoint in airspace.list_navpoints:
         if navpoint.name==origen:
@@ -106,11 +112,11 @@ def NeighboursMap(airspace, origen):
         return None
 
     for navpoint in airspace.list_navpoints:
-        plt.scatter(navpoint.longitud, navpoint.latitud, color="grey", s=10)
-        plt.text(navpoint.longitud, navpoint.latitud, navpoint.name, fontsize=6, color="black")
+        ax.scatter(navpoint.longitud, navpoint.latitud, color="grey", s=10)
+        ax.text(navpoint.longitud, navpoint.latitud, navpoint.name, fontsize=6, color="black")
 
 
-    plt.scatter(nav_buscat.longitud, nav_buscat.latitud, color="blue", s=10)
+    ax.scatter(nav_buscat.longitud, nav_buscat.latitud, color="blue", s=10)
 
     for segment in airspace.list_navsegments:
 
@@ -132,23 +138,24 @@ def NeighboursMap(airspace, origen):
         if originnav==nav_buscat:
             longitud_values = [originnav.longitud, destnav.longitud]
             latitud_values = [originnav.latitud, destnav.latitud]
-            plt.plot(longitud_values, latitud_values, color="purple", linewidth=1)
+            ax.plot(longitud_values, latitud_values, color="purple", linewidth=1)
 
             mid_x = (originnav.longitud + destnav.longitud) / 2
             mid_y = (originnav.latitud + destnav.latitud) / 2
-            plt.text(mid_x, mid_y, f"{segment.distance:.2f}", fontsize=5, color="black")
+            ax.text(mid_x, mid_y, f"{segment.distance:.2f}", fontsize=5, color="black")
 
             dx = destnav.longitud - originnav.longitud
             dy = destnav.latitud - originnav.latitud
             scale = 0.95
-            plt.arrow(originnav.longitud, originnav.latitud, dx * scale, dy * scale, length_includes_head=True,
+            ax.arrow(originnav.longitud, originnav.latitud, dx * scale, dy * scale, length_includes_head=True,
                       head_width=0.02, head_length=0.02, fc="purple", ec="purple",)
 
-    plt.xlabel("X")
-    plt.ylabel("Y")
-    plt.title(f"Mapa Espai Aeri -- Veïns de {origen}")
-    plt.grid()
-    plt.show()
+    ax.set_xlabel("X")
+    ax.set_ylabel("Y")
+    ax.set_title(f"Mapa Espai Aeri -- Veïns de {origen}")
+    ax.set_grid(True)
+
+    return fig
 
 def ShowShortestMap(airspace, origen, destino):
     nav_origen=None
@@ -166,3 +173,76 @@ def ShowShortestMap(airspace, origen, destino):
     if nav_origen==None or nav_destino==None:
         return None
 
+def Reachability(airspace, navpoint):
+    for navpoint in airspace.list_navpoints:
+        if navpoint==NavPoint.name:
+            origin=navpoint
+            break
+    i=0
+
+    found=False
+    while i<len(graph.nodes):
+        if graph.nodes[i]==origin:
+            found=True
+        i=i+1
+    i=i-1
+    if found:
+        reach=[origin]
+        new=True
+        while new:
+            new=False
+            for node in reach:
+                for vecino in node.list_of_neighbours:
+                    if vecino not in reach:
+                        reach.append(vecino)
+                        new=True
+        print(reach[0].name)
+        return reach
+
+def FindShortestPath(graph, origin, destination):
+    for nodes in graph.nodes:
+        if nodes.name==origin:
+            origin=nodes
+        elif nodes.name==destination:
+            destination=nodes
+
+    camins_possibles=[]
+
+    camino_inicial=Path()
+    AddNodeToPath(camino_inicial, origin)
+    camins_possibles.append(camino_inicial)
+
+    found=False
+    resultado=None
+
+    while len(camins_possibles)!=0 and found==False:
+        # Ordena caminos por coste estimado (puedes añadir atributo si quieres)
+        camins_possibles.sort(key=lambda p: len(p.nodelist))
+
+        camino_actual = camins_possibles.pop(0)  # saca el mejor camino
+        nodo_actual = camino_actual.nodelist[-1]
+
+        for vecino in nodo_actual.list_of_neighbours:
+            # Evita ciclos
+            if vecino in camino_actual.nodelist:
+                continue
+
+            nuevo_camino = camino_actual.copy()
+            AddNodeToPath(nuevo_camino, vecino)
+
+            if vecino == destination:
+                found = True
+                resultado = nuevo_camino
+                break  # terminamos
+
+            camins_possibles.append(nuevo_camino)
+
+    if found:
+        print("Camino encontrado:")
+        for nodo in resultado.nodelist:
+            print(nodo.name, end=" → ")
+        print("FIN")
+        return resultado
+    else:
+        print("No se encontró camino.")
+        return None
