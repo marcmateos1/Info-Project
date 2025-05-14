@@ -123,6 +123,7 @@ def NeighboursMap(airspace, origen):
         found_origin=False
         found_dest=False
 
+
         for navpoints in airspace.list_navpoints:
             if navpoints.number==segment.originnumber:
                 originnav=navpoints
@@ -153,7 +154,7 @@ def NeighboursMap(airspace, origen):
     ax.set_xlabel("X")
     ax.set_ylabel("Y")
     ax.set_title(f"Mapa Espai Aeri -- Veïns de {origen}")
-    ax.set_grid(True)
+    ax.grid(True)
 
     return fig
 

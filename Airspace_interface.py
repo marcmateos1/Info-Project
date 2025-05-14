@@ -14,8 +14,15 @@ g=AirSpace()
 #per posar el graf dins l'interfaç, importem el FigureCanvasTkAgg
 
 def Neighbours():
-    neighbour_origin=entry.get()
-    NeighboursMap(g,neighbour_origin)
+    neighbour_origin=ent1.get()
+    fign = NeighboursMap(g,neighbour_origin)
+    #destruim l'anterior grafic:
+    for widget in right_frame.winfo_children():
+        widget.destroy()
+    grafn = FigureCanvasTkAgg(fign, master=right_frame)
+    grafn.draw()
+    grafn.get_tk_widget().pack(fill="both",expand=True)
+
 #Mida
 root=tk.Tk()
 root.geometry("1000x600")
