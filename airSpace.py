@@ -162,14 +162,23 @@ def FindShortestMap(airspace, origen, destino):
 
     nav_origen = None
     nav_destino = None
-
-    for navpoint in airspace.list_navpoints:
-        if navpoint.name == origen:
-            nav_origen = navpoint
-            print("hola")
-        if navpoint.name == destino:
-            nav_destino = navpoint
-            print("adios")
+    a=False
+    b=False
+    for airport in airspace.list_navairports:
+        if airport.name == origen:
+            originname = airport.sids[0]
+            for navpoint in airspace.list_navpoints:
+                if navpoint.name==originname:
+                    nav_origen=navpoint
+                    a=True
+        if airport.name == destino:
+            destname=airport.stars[0]
+            for navpoint in airspace.list_navpoints:
+                if navpoint.name==destname:
+                    nav_destino = navpoint
+                    b=True
+        if a==True and b==True:
+            break
 
     if nav_origen is None or nav_destino is None:
         print("Origen o destino no encontrado.")
@@ -256,3 +265,79 @@ def PlotShortestPath(airspace, path):
     ax.grid(True)
 
     return fig
+
+
+def ReachabilityFromAirport(airspace, airport_name):
+    # Buscar el aeropuerto
+    airport = None
+    for a in airspace.list_navairports:
+        if a.name.strip() == airport_name.strip():
+            airport = a
+            break
+    if airport is None:
+        print(f"Aeropuerto '{airport_name}' no encontrado.")
+        return []
+
+    # Buscar NavPoints asociados a sus SIDs
+    starting_navpoints = []
+    for sid_name in airport.sids:
+        for nav in airspace.list_navpoints:
+            if nav.name == sid_name.strip():
+                starting_navpoints.append(nav)
+                break
+
+    if not starting_navpoints:
+        print(f"No se encontraron NavPoints para los SIDs de {airport_name}.")
+        return []
+
+    # Visitar todos los alcanzables desde cada SID
+    visited = set()
+    to_visit = starting_navpoints.copy()
+
+    while to_visit:
+        current = to_visit.pop()
+        if current.number in visited:
+            continue
+        visited.add(current.number)
+
+        # Añadir vecinos conectados desde segmentos
+        for seg in airspace.list_navsegments:
+            if seg.originnumber == current.number:
+                # Buscar el NavPoint destino
+                for nav in airspace.list_navpoints:
+                    if nav.number == seg.destnumber and nav.number not in visited:
+                        to_visit.append(nav)
+                        break
+
+    # Devolver lista de NavPoints alcanzables
+    return [nav for nav in airspace.list_navpoints if nav.number in visited]
+
+def PlotReachabilityFromAirport(airspace, airport_name):
+    reachable_navpoints = ReachabilityFromAirport(airspace, airport_name)
+    reachable_ids = set(nav.number for nav in reachable_navpoints)
+
+    # Dibuja los navpoints
+    for nav in reachable_navpoints:
+        plt.scatter(nav.longitud, nav.latitud, color="blue", s=10)
+        plt.text(nav.longitud, nav.latitud, nav.name, fontsize=6, color="black")
+
+    # Dibuja los segmentos con flechas
+    for segment in airspace.list_navsegments:
+        if segment.originnumber in reachable_ids and segment.destnumber in reachable_ids:
+            origin_nav = next(n for n in reachable_navpoints if n.number == segment.originnumber)
+            dest_nav = next(n for n in reachable_navpoints if n.number == segment.destnumber)
+
+            dx = dest_nav.longitud - origin_nav.longitud
+            dy = dest_nav.latitud - origin_nav.latitud
+
+            plt.arrow(origin_nav.longitud, origin_nav.latitud,
+                      dx, dy,
+                      head_width=0.02, head_length=0.02,
+                      fc='purple', ec='purple', length_includes_head=True)
+
+    plt.xlabel("Longitud")
+    plt.ylabel("Latitud")
+    plt.title(f"Reachability desde l'aeroport {airport_name}")
+    plt.grid(True)
+    plt.show()
+

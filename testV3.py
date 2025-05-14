@@ -9,5 +9,6 @@ LoadNavAirports("cat_aer.txt", g)
 #PlotMap(g)
 #NeighboursMap(g, "GODOX")
 
-cami=FindShortestMap(g, "GODOX", "ANTON")
-PlotShortestPath(g, cami)
+#cami=FindShortestMap(g, "GODOX", "ANTON")
+#PlotShortestPath(g, cami)
+PlotReachabilityFromAirport(g,"LEGE")
