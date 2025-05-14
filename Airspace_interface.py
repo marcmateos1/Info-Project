@@ -11,12 +11,60 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 #LoadNavAirports("cat_aer.txt", g)
 #per posar el graf dins l'interfaç, importem el FigureCanvasTkAgg
 
+
+def LoadFileAER():
+    global fileAER
+    ruta_fitxerAER = filedialog.askopenfilename(
+        title="Selecciona un fitxer .txt",
+        filetypes=[("Fitxers de text", "*.txt")]
+    )
+    if ruta_fitxerAER:
+        print("Has seleccionat:", ruta_fitxerAER)
+        fileAER=ruta_fitxerAER
+        with open(ruta_fitxerAER, "r", encoding="utf-8") as fitxer:
+            contingut = fitxer.read()
+            print("Contingut del fitxer:")
+            print(contingut)
+
+def LoadFileNAV():
+    global fileNAV
+    ruta_fitxerNAV = filedialog.askopenfilename(
+        title="Selecciona un fitxer .txt",
+        filetypes=[("Fitxers de text", "*.txt")]
+    )
+    if ruta_fitxerNAV:
+        print("Has seleccionat:", ruta_fitxerNAV)
+        fileNAV=ruta_fitxerNAV
+        with open(ruta_fitxerNAV, "r", encoding="utf-8") as fitxer:
+            contingut = fitxer.read()
+            print("Contingut del fitxer:")
+            print(contingut)
+
+
+def LoadFileSEG():
+    global fileSEG
+    ruta_fitxerSEG = filedialog.askopenfilename(
+        title="Selecciona un fitxer .txt",
+        filetypes=[("Fitxers de text", "*.txt")]
+    )
+    if ruta_fitxerSEG:
+        print("Has seleccionat:", ruta_fitxerSEG)
+        fileSEG=ruta_fitxerSEG
+        with open(ruta_fitxerSEG, "r", encoding="utf-8") as fitxer:
+            contingut = fitxer.read()
+            print("Contingut del fitxer:")
+            print(contingut)
+
+
 def CarregarDades():
     global g
+    global fileAER
+    global fileNAV
+    global fileSEG
     g=AirSpace()
-    LoadNavPoints("cat_nav", g)
-    LoadNavSegments("cat_seg.txt", g)
-    LoadNavAirports("cat_aer.txt", g)
+    LoadNavPoints(fileNAV, g)
+    LoadNavSegments(fileSEG, g)
+    LoadNavAirports(fileAER, g)
 
 def Airspace():
     CarregarDades()
@@ -65,6 +113,8 @@ root.geometry("1000x600")
 root.title("Interfaç gràfica de l'espai aeri de Catalunya")
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=4)
+root.rowconfigure(0,weight=1)
+root.rowconfigure(1,weight=1)
 
 #columna esquerra
 left_frame = tk.Frame(root, bg="#ffffff", bd=2, relief="groove")
@@ -72,13 +122,13 @@ left_frame.grid(row=0, column=0, sticky="nswe", padx=10, pady=10)
 left_frame.rowconfigure([0, 1],weight=1)
 
 #mapa cat
-frame0=tk.LabelFrame(left_frame,bg="#ffffff")
+frame0=tk.LabelFrame(left_frame,bg="#e8eaf6", bd=2, relief="groove")
 frame0.pack(fill="both", expand=True, pady=10, padx=10)
 boto0=tk.Button(frame0, text="AIRSPACE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=Airspace)
 boto0.pack(fill="x",pady=10)
 
 #frame botons
-left_frame1 = tk.LabelFrame(left_frame,bg="#ffffff")
+left_frame1 = tk.LabelFrame(left_frame,bg="#e8eaf6",bd=2, relief="groove")
 left_frame1.pack(fill="both", expand=True, pady=10, padx=10)
 left_frame.rowconfigure([0, 1, 2], weight=1)
 
@@ -109,6 +159,29 @@ ent3.pack(fill="x",pady=(0,10))
 #columna dreta
 right_frame = tk.Frame(root, bg="#e8eaf6", bd=2, relief="groove")
 right_frame.grid(row=0, column=1, sticky="nswe", padx=10, pady=10)
+
+#fila sota
+low_frame=tk.Frame(root, bg="#e8eaf6", bd=2, relief="groove")
+low_frame.grid(row=1, column=0, columnspan=2,sticky="nswe", padx=10, pady=10)
+low_frame.columnconfigure([0,1,2],weight=1)
+
+#botó aer
+frameAer=tk.Frame(low_frame,bg="#ffffff")
+frameAer.grid(row=0, column=0, sticky="nswe", padx=10, pady=10)
+botoAer=tk.Button(frameAer, text="INPUT AIRPORTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileAER)
+botoAer.pack(fill="x",pady=(0,20))
+
+#botó nav
+frameNav=tk.Frame(low_frame,bg="#ffffff")
+frameNav.grid(row=0, column=1, sticky="nswe", padx=10, pady=10)
+botoNav=tk.Button(frameNav, text="INPUT NAVIGATION POINTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileNAV)
+botoNav.pack(fill="x",pady=(0,20))
+
+#botó seg
+frameSeg=tk.Frame(low_frame,bg="#ffffff")
+frameSeg.grid(row=0, column=2, sticky="nswe", padx=10, pady=10)
+botoSeg=tk.Button(frameSeg, text="IMPORT NAVIGATION SEGMENTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileSEG)
+botoSeg.pack(fill="x",pady=(0,20))
 
 #graf
 #fig=PlotMap(g)
