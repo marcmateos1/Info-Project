@@ -136,7 +136,7 @@ left_frame1.pack(fill="both", expand=True, pady=10, padx=10)
 left_frame.rowconfigure([0, 1, 2], weight=1)
 
 #botó veins
-frame1=tk.Frame(left_frame1,bg="#ffffff")
+frame1=tk.Frame(left_frame1,bg="#e8eaf6")
 frame1.pack(fill="both", expand=True, pady=10, padx=10)
 boto1=tk.Button(frame1, text="NEIGHBOURS MAP", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=Neighbours)
 boto1.pack(fill="x",pady=(0,20))
@@ -144,7 +144,7 @@ ent1=tk.Entry(frame1,font=("Segoe UI", 10))
 ent1.pack(fill="x",pady=(0,10))
 
 #botó sPath
-frame2=tk.Frame(left_frame1,bg="#ffffff")
+frame2=tk.Frame(left_frame1,bg="#e8eaf6")
 frame2.pack(fill="both", expand=True, pady=10, padx=10)
 boto2=tk.Button(frame2, text="SHORTEST PATH", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=ShowSPath)
 boto2.pack(fill="x",pady=(0,20))
@@ -152,7 +152,7 @@ ent2=tk.Entry(frame2,font=("Segoe UI", 10))
 ent2.pack(fill="x",pady=(0,10))
 
 #botó Reach
-frame3=tk.Frame(left_frame1,bg="#ffffff")
+frame3=tk.Frame(left_frame1,bg="#e8eaf6")
 frame3.pack(fill="both", expand=True, pady=10, padx=10)
 boto3=tk.Button(frame3, text="REACHABILITY MAP", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=Neighbours)
 boto3.pack(fill="x",pady=(0,20))
@@ -169,19 +169,19 @@ low_frame.grid(row=1, column=0, columnspan=2,sticky="nswe", padx=10, pady=10)
 low_frame.columnconfigure([0,1,2],weight=1)
 
 #botó aer
-frameAer=tk.Frame(low_frame,bg="#ffffff")
+frameAer=tk.Frame(low_frame,bg="#e8eaf6")
 frameAer.grid(row=0, column=0, sticky="nswe", padx=10, pady=10)
 botoAer=tk.Button(frameAer, text="INPUT AIRPORTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileAER)
 botoAer.pack(fill="x",pady=(0,20))
 
 #botó nav
-frameNav=tk.Frame(low_frame,bg="#ffffff")
+frameNav=tk.Frame(low_frame,bg="#e8eaf6")
 frameNav.grid(row=0, column=1, sticky="nswe", padx=10, pady=10)
 botoNav=tk.Button(frameNav, text="INPUT NAVIGATION POINTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileNAV)
 botoNav.pack(fill="x",pady=(0,20))
 
 #botó seg
-frameSeg=tk.Frame(low_frame,bg="#ffffff")
+frameSeg=tk.Frame(low_frame,bg="#e8eaf6")
 frameSeg.grid(row=0, column=2, sticky="nswe", padx=10, pady=10)
 botoSeg=tk.Button(frameSeg, text="IMPORT NAVIGATION SEGMENTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileSEG)
 botoSeg.pack(fill="x",pady=(0,20))
