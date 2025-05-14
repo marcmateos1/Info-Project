@@ -3,7 +3,7 @@ from navPoint import NavPoint
 from navSegment import NavSegment
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
-
+from path import Path, AddNavDistToMap
 
 class AirSpace:
     def __init__(self):
@@ -158,92 +158,98 @@ def NeighboursMap(airspace, origen):
 
     return fig
 
-def ShowShortestMap(airspace, origen, destino):
-    nav_origen=None
-    nav_destino=None
+def FindShortestMap(airspace, origen, destino):
+
+    nav_origen = None
+    nav_destino = None
 
     for navpoint in airspace.list_navpoints:
-        if navpoint.name==origen:
-            nav_origen=navpoint
-            break
-
-    for navpoint in airspace.list_navpoints:
+        if navpoint.name == origen:
+            nav_origen = navpoint
+            print("hola")
         if navpoint.name == destino:
             nav_destino = navpoint
-            break
-    if nav_origen==None or nav_destino==None:
+            print("adios")
+
+    if nav_origen is None or nav_destino is None:
+        print("Origen o destino no encontrado.")
         return None
 
-def Reachability(airspace, navpoint):
-    for navpoint in airspace.list_navpoints:
-        if navpoint==NavPoint.name:
-            origin=navpoint
-            break
-    i=0
+    camins_possibles = []
 
-    found=False
-    while i<len(graph.nodes):
-        if graph.nodes[i]==origin:
-            found=True
-        i=i+1
-    i=i-1
-    if found:
-        reach=[origin]
-        new=True
-        while new:
-            new=False
-            for node in reach:
-                for vecino in node.list_of_neighbours:
-                    if vecino not in reach:
-                        reach.append(vecino)
-                        new=True
-        print(reach[0].name)
-        return reach
-
-def FindShortestPath(graph, origin, destination):
-    for nodes in graph.nodes:
-        if nodes.name==origin:
-            origin=nodes
-        elif nodes.name==destination:
-            destination=nodes
-
-    camins_possibles=[]
-
-    camino_inicial=Path()
-    AddNodeToPath(camino_inicial, origin)
+    camino_inicial = Path()
+    AddNavDistToMap(camino_inicial, nav_origen, 0)  # Inicia con 0 distancia
     camins_possibles.append(camino_inicial)
 
-    found=False
-    resultado=None
+    visited = set()
+    resultado = None
 
-    while len(camins_possibles)!=0 and found==False:
-        # Ordena caminos por coste estimado (puedes añadir atributo si quieres)
-        camins_possibles.sort(key=lambda p: len(p.nodelist))
-
-        camino_actual = camins_possibles.pop(0)  # saca el mejor camino
+    while camins_possibles:
+        camins_possibles.sort(key=lambda p: p.total_distance)
+        camino_actual = camins_possibles.pop(0)
         nodo_actual = camino_actual.nodelist[-1]
 
-        for vecino in nodo_actual.list_of_neighbours:
-            # Evita ciclos
-            if vecino in camino_actual.nodelist:
-                continue
+        if nodo_actual == nav_destino:
+            resultado = camino_actual
+            break
 
-            nuevo_camino = camino_actual.copy()
-            AddNodeToPath(nuevo_camino, vecino)
+        if nodo_actual.number in visited:
+            continue
+        visited.add(nodo_actual.number)
 
-            if vecino == destination:
-                found = True
-                resultado = nuevo_camino
-                break  # terminamos
+        for segment in airspace.list_navsegments:
+            if segment.originnumber == nodo_actual.number:
+                vecino = next((p for p in airspace.list_navpoints if p.number == segment.destnumber), None)
+                if vecino is None or vecino in camino_actual.nodelist:
+                    continue
 
-            camins_possibles.append(nuevo_camino)
+                nuevo_camino = camino_actual.copy()
+                AddNavDistToMap(nuevo_camino, vecino, float(segment.distance))  # Agrega distancia real
+                camins_possibles.append(nuevo_camino)
 
-    if found:
-        print("Camino encontrado:")
+    if resultado:
+        print("Camino más corto por distancia:")
         for nodo in resultado.nodelist:
             print(nodo.name, end=" → ")
-        print("FIN")
+        print("FIN\nDistancia total:", resultado.total_distance)
         return resultado
     else:
         print("No se encontró camino.")
         return None
+
+def PlotShortestPath(airspace, path):
+    # Dibuja todos los navpoints
+    for navpoint in airspace.list_navpoints:
+        plt.scatter(navpoint.longitud, navpoint.latitud, color="lightgray", s=10)
+        plt.text(navpoint.longitud, navpoint.latitud, navpoint.name, fontsize=6, color="gray")
+
+    # Dibuja todos los segmentos en gris claro
+    for segment in airspace.list_navsegments:
+        origin = next((p for p in airspace.list_navpoints if p.number == segment.originnumber), None)
+        dest = next((p for p in airspace.list_navpoints if p.number == segment.destnumber), None)
+        if origin and dest:
+            plt.plot([origin.longitud, dest.longitud], [origin.latitud, dest.latitud], color="lightgray", linewidth=0.5)
+
+    # Ahora dibuja el camino más corto
+    for i in range(len(path.nodelist) - 1):
+        origen = path.nodelist[i]
+        destino = path.nodelist[i + 1]
+
+        dx = destino.longitud - origen.longitud
+        dy = destino.latitud - origen.latitud
+
+        plt.arrow(
+            origen.longitud, origen.latitud, dx, dy,
+            head_width=0.05, head_length=0.05, fc="red", ec="red", length_includes_head=True
+        )
+
+    # Marcar origen y destino
+    plt.scatter(path.nodelist[0].longitud, path.nodelist[0].latitud, color="green", s=30, label="Origen")
+    plt.scatter(path.nodelist[-1].longitud, path.nodelist[-1].latitud, color="red", s=30, label="Destino")
+
+    plt.title(f"Shortest path between {path.nodelist[0].name} and {path.nodelist[-1].name}")
+    plt.xlabel("Longitud")
+    plt.ylabel("Latitud")
+    plt.legend()
+    plt.grid(True)
+    plt.show()
