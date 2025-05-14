@@ -4,16 +4,22 @@ from node import Distance
 class Path:
     def __init__(self):
         self.nodelist=[]
-        self.totalcost=0
+        self.total_distance=0.0
 
     def copy(self):
         new_path = Path()
         new_path.nodelist = self.nodelist.copy()  # copia la lista de nodos
+        new_path.total_distance = self.total_distance
         return new_path
 
 def AddNodeToPath(path, node):
     if node not in path.nodelist:
         path.nodelist.append(node)
+
+def AddNavDistToMap(path, navpoint, distance):
+    if navpoint not in path.nodelist:
+        path.nodelist.append(navpoint)
+        path.total_distance+=distance
 
 
 def ContainsNode(path, node):
@@ -28,11 +34,11 @@ def CostToNode(path, node):
             i = 0
             while i < (len(path.nodelist) - 1):
                 d = Distance(path.nodelist[i], path.nodelist[i + 1])
-                path.totalcost = path.totalcost + d
+                path.total_distance= path.total_distance + d
                 i = i + 1
             df = Distance(node, path.nodelist[-1])
-            path.totalcost = df + path.totalcost
-            return path.totalcost
+            path.total_distance = df + path.total_distance
+            return path.total_distance
     else:
         a=-1
         return a
