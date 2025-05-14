@@ -18,6 +18,16 @@ def CarregarDades():
     LoadNavSegments("cat_seg.txt", g)
     LoadNavAirports("cat_aer.txt", g)
 
+def Airspace():
+    CarregarDades()
+    #destruim l'anterior grafic:
+    for widget in right_frame.winfo_children():
+        widget.destroy()
+    fig = PlotMap(g)
+    graf = FigureCanvasTkAgg(fig, master=right_frame)
+    graf.draw()
+    graf.get_tk_widget().pack(fill="both", expand=True)
+
 def Neighbours():
     CarregarDades()
     neighbour_origin=ent1.get()
@@ -29,15 +39,26 @@ def Neighbours():
     grafn.draw()
     grafn.get_tk_widget().pack(fill="both",expand=True)
 
-def Airspace():
+def AirportsForShortestPath():
+    global SP_origin
+    global SP_dest
+    info=ent2.get().split(" ")
+    print(info)
+    SP_origin=info[0]
+    SP_dest=info[1]
+
+def ShowSPath():
     CarregarDades()
+    AirportsForShortestPath()
     #destruim l'anterior grafic:
     for widget in right_frame.winfo_children():
         widget.destroy()
-    fig = PlotMap(g)
-    graf = FigureCanvasTkAgg(fig, master=right_frame)
-    graf.draw()
-    graf.get_tk_widget().pack(fill="both", expand=True)
+    path=FindShortestMap(g,SP_origin,SP_dest)
+    figSP=PlotShortestPath(g,path)
+    grafSP=FigureCanvasTkAgg(figSP,master=right_frame)
+    grafSP.draw()
+    grafSP.get_tk_widget().pack(fill="both",expand=True)
+
 #Mida
 root=tk.Tk()
 root.geometry("1000x600")
@@ -72,7 +93,7 @@ ent1.pack(fill="x",pady=(0,10))
 #botó sPath
 frame2=tk.Frame(left_frame1,bg="#ffffff")
 frame2.pack(fill="both", expand=True, pady=10, padx=10)
-boto2=tk.Button(frame2, text="SHORTEST PATH", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=Neighbours)
+boto2=tk.Button(frame2, text="SHORTEST PATH", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=ShowSPath)
 boto2.pack(fill="x",pady=(0,20))
 ent2=tk.Entry(frame2,font=("Segoe UI", 10))
 ent2.pack(fill="x",pady=(0,10))

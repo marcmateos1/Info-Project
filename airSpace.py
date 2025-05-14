@@ -218,17 +218,19 @@ def FindShortestMap(airspace, origen, destino):
         return None
 
 def PlotShortestPath(airspace, path):
+    fig=Figure()
+    ax=fig.add_subplot(111)
     # Dibuja todos los navpoints
     for navpoint in airspace.list_navpoints:
-        plt.scatter(navpoint.longitud, navpoint.latitud, color="lightgray", s=10)
-        plt.text(navpoint.longitud, navpoint.latitud, navpoint.name, fontsize=6, color="gray")
+        ax.scatter(navpoint.longitud, navpoint.latitud, color="lightgray", s=10)
+        ax.text(navpoint.longitud, navpoint.latitud, navpoint.name, fontsize=6, color="gray")
 
     # Dibuja todos los segmentos en gris claro
     for segment in airspace.list_navsegments:
         origin = next((p for p in airspace.list_navpoints if p.number == segment.originnumber), None)
         dest = next((p for p in airspace.list_navpoints if p.number == segment.destnumber), None)
         if origin and dest:
-            plt.plot([origin.longitud, dest.longitud], [origin.latitud, dest.latitud], color="lightgray", linewidth=0.5)
+            ax.plot([origin.longitud, dest.longitud], [origin.latitud, dest.latitud], color="lightgray", linewidth=0.5)
 
     # Ahora dibuja el camino más corto
     for i in range(len(path.nodelist) - 1):
@@ -238,18 +240,19 @@ def PlotShortestPath(airspace, path):
         dx = destino.longitud - origen.longitud
         dy = destino.latitud - origen.latitud
 
-        plt.arrow(
+        ax.arrow(
             origen.longitud, origen.latitud, dx, dy,
             head_width=0.05, head_length=0.05, fc="red", ec="red", length_includes_head=True
         )
 
     # Marcar origen y destino
-    plt.scatter(path.nodelist[0].longitud, path.nodelist[0].latitud, color="green", s=30, label="Origen")
-    plt.scatter(path.nodelist[-1].longitud, path.nodelist[-1].latitud, color="red", s=30, label="Destino")
+    ax.scatter(path.nodelist[0].longitud, path.nodelist[0].latitud, color="green", s=30, label="Origen")
+    ax.scatter(path.nodelist[-1].longitud, path.nodelist[-1].latitud, color="red", s=30, label="Destino")
 
-    plt.title(f"Shortest path between {path.nodelist[0].name} and {path.nodelist[-1].name}")
-    plt.xlabel("Longitud")
-    plt.ylabel("Latitud")
-    plt.legend()
-    plt.grid(True)
-    plt.show()
+    ax.set_title(f"Shortest path between {path.nodelist[0].name} and {path.nodelist[-1].name}")
+    ax.set_xlabel("Longitud")
+    ax.set_ylabel("Latitud")
+    ax.legend()
+    ax.grid(True)
+
+    return fig
