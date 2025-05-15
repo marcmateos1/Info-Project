@@ -139,7 +139,9 @@ left_frame.rowconfigure([0, 1],weight=1)
 #mapa cat
 frame0=tk.LabelFrame(left_frame,bg="#e8eaf6", bd=2, relief="groove")
 frame0.pack(fill="both", expand=True, pady=10, padx=10)
-boto0=tk.Button(frame0, text="AIRSPACE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=Airspace)
+frame01=tk.LabelFrame(frame0,bg="#e8eaf6")
+frame01.pack(fill="both", expand=True, pady=10, padx=10)
+boto0=tk.Button(frame01, text="AIRSPACE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=Airspace)
 boto0.pack(fill="x",pady=10)
 
 #frame botons
