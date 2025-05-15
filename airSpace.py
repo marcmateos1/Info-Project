@@ -313,13 +313,15 @@ def ReachabilityFromAirport(airspace, airport_name):
     return [nav for nav in airspace.list_navpoints if nav.number in visited]
 
 def PlotReachabilityFromAirport(airspace, airport_name):
+    fig=Figure()
+    ax=fig.add_subplot(111)
     reachable_navpoints = ReachabilityFromAirport(airspace, airport_name)
     reachable_ids = set(nav.number for nav in reachable_navpoints)
 
     # Dibuja los navpoints
     for nav in reachable_navpoints:
-        plt.scatter(nav.longitud, nav.latitud, color="blue", s=10)
-        plt.text(nav.longitud, nav.latitud, nav.name, fontsize=6, color="black")
+        ax.scatter(nav.longitud, nav.latitud, color="blue", s=10)
+        ax.text(nav.longitud, nav.latitud, nav.name, fontsize=6, color="black")
 
     # Dibuja los segmentos con flechas
     for segment in airspace.list_navsegments:
@@ -330,14 +332,15 @@ def PlotReachabilityFromAirport(airspace, airport_name):
             dx = dest_nav.longitud - origin_nav.longitud
             dy = dest_nav.latitud - origin_nav.latitud
 
-            plt.arrow(origin_nav.longitud, origin_nav.latitud,
+            ax.arrow(origin_nav.longitud, origin_nav.latitud,
                       dx, dy,
                       head_width=0.02, head_length=0.02,
                       fc='purple', ec='purple', length_includes_head=True)
 
-    plt.xlabel("Longitud")
-    plt.ylabel("Latitud")
-    plt.title(f"Reachability desde l'aeroport {airport_name}")
-    plt.grid(True)
-    plt.show()
+    ax.set_xlabel("Longitud")
+    ax.set_ylabel("Latitud")
+    ax.set_title(f"Reachability desde l'aeroport {airport_name}")
+    ax.grid(True)
+
+    return fig
 

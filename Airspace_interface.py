@@ -111,6 +111,17 @@ def ShowSPath():
         grafSP.draw()
         grafSP.get_tk_widget().pack(fill="both",expand=True)
 
+def ShowReach():
+    CarregarDades()
+    #destruim l'anterior grafic:
+    for widget in right_frame.winfo_children():
+        widget.destroy()
+    reach_origin=ent3.get()
+    figR=PlotReachabilityFromAirport(g,reach_origin)
+    grafR = FigureCanvasTkAgg(figR, master=right_frame)
+    grafR.draw()
+    grafR.get_tk_widget().pack(fill="both",expand=True)
+
 #Mida
 root=tk.Tk()
 root.geometry("1000x600")
@@ -155,7 +166,7 @@ ent2.pack(fill="x",pady=(0,10))
 #botó Reach
 frame3=tk.Frame(left_frame1,bg="#e8eaf6")
 frame3.pack(fill="both", expand=True, pady=10, padx=10)
-boto3=tk.Button(frame3, text="REACHABILITY MAP", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=Neighbours)
+boto3=tk.Button(frame3, text="REACHABILITY MAP", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=ShowReach)
 boto3.pack(fill="x",pady=(0,20))
 ent3=tk.Entry(frame3,font=("Segoe UI", 10))
 ent3.pack(fill="x",pady=(0,10))
