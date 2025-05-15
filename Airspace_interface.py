@@ -185,13 +185,13 @@ low_frame.columnconfigure([0,1,2],weight=1)
 #botó aer
 frameAer=tk.Frame(low_frame,bg="#e8eaf6")
 frameAer.grid(row=0, column=0, sticky="nswe", padx=10, pady=10)
-botoAer=tk.Button(frameAer, text="INPUT AIRPORTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileAER)
+botoAer=tk.Button(frameAer, text="IMPORT AIRPORTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileAER)
 botoAer.pack(fill="x",pady=(0,20))
 
 #botó nav
 frameNav=tk.Frame(low_frame,bg="#e8eaf6")
 frameNav.grid(row=0, column=1, sticky="nswe", padx=10, pady=10)
-botoNav=tk.Button(frameNav, text="INPUT NAVIGATION POINTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileNAV)
+botoNav=tk.Button(frameNav, text="IMPORT NAVIGATION POINTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileNAV)
 botoNav.pack(fill="x",pady=(0,20))
 
 #botó seg
