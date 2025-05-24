@@ -41,12 +41,12 @@ def LoadNavAirports(file,airspace):
     i = 0
     while i < len(lines):
         line = lines[i].strip()
-        if line.startswith("LE") and len(line) == 4:
+        if "." not in line:
             nom = line
             sids = []
             stars = []
             i += 1
-            while i < len(lines) and not (lines[i].strip().startswith("LE") and len(lines[i].strip()) == 4):
+            while i < len(lines) and "." in lines[i]:
                 current = lines[i].strip()
                 if current.endswith(".D"):
                     sids.append(current)
