@@ -105,7 +105,7 @@ def PlotMap(airspace):
 
 def NeighboursMap(airspace, origen):
     fig=Figure()
-    nav_list=[]
+    airspace.nav_list=[]
     ax=fig.add_subplot(111)
     nav_buscat=None
     for navpoint in airspace.list_navpoints:
@@ -122,7 +122,7 @@ def NeighboursMap(airspace, origen):
 
     ax.scatter(nav_buscat.longitud, nav_buscat.latitud, color="blue", s=10)
 
-    nav_list.append(nav_buscat)
+    airspace.nav_list.append(nav_buscat)
 
     for segment in airspace.list_navsegments:
 
@@ -134,12 +134,12 @@ def NeighboursMap(airspace, origen):
             if navpoints.number==segment.originnumber:
                 originnav=navpoints
                 found_origin=True
-                nav_list.append(originnav)
+                #airspace.nav_list.append(originnav)
 
             elif navpoints.number==segment.destnumber:
                 destnav=navpoints
                 found_dest=True
-                nav_list.append(destnav)
+                #airspace.nav_list.append(destnav)
             elif found_dest==True and found_origin==True:
                 break
 
@@ -147,6 +147,10 @@ def NeighboursMap(airspace, origen):
             longitud_values = [originnav.longitud, destnav.longitud]
             latitud_values = [originnav.latitud, destnav.latitud]
             ax.plot(longitud_values, latitud_values, color="purple", linewidth=1)
+            if originnav.name!=origen:
+                airspace.nav_list.append(originnav)
+            if destnav.name!=origen:
+                airspace.nav_list.append(destnav)
 
             mid_x = (originnav.longitud + destnav.longitud) / 2
             mid_y = (originnav.latitud + destnav.latitud) / 2
@@ -234,6 +238,7 @@ def FindShortestMap(airspace, origen, destino):
         return None
 
 def PlotShortestPath(airspace, path):
+    airspace.nav_list=[]
     fig=Figure()
     ax=fig.add_subplot(111)
     # Dibuja todos los navpoints
@@ -264,7 +269,8 @@ def PlotShortestPath(airspace, path):
     # Marcar origen y destino
     ax.scatter(path.nodelist[0].longitud, path.nodelist[0].latitud, color="green", s=30, label="Origen")
     ax.scatter(path.nodelist[-1].longitud, path.nodelist[-1].latitud, color="red", s=30, label="Destino")
-
+    for elements in path.nodelist:
+        airspace.nav_list.append(elements)
     ax.set_title(f"Shortest path between {path.nodelist[0].name} and {path.nodelist[-1].name}")
     ax.set_xlabel("Longitud")
     ax.set_ylabel("Latitud")
@@ -320,6 +326,7 @@ def ReachabilityFromAirport(airspace, airport_name):
     return [nav for nav in airspace.list_navpoints if nav.number in visited]
 
 def PlotReachabilityFromAirport(airspace, airport_name):
+    airspace.nav_list=[]
     fig=Figure()
     ax=fig.add_subplot(111)
     reachable_navpoints = ReachabilityFromAirport(airspace, airport_name)
@@ -329,6 +336,7 @@ def PlotReachabilityFromAirport(airspace, airport_name):
     for nav in reachable_navpoints:
         ax.scatter(nav.longitud, nav.latitud, color="blue", s=10)
         ax.text(nav.longitud, nav.latitud, nav.name, fontsize=6, color="black")
+        airspace.nav_list.append(nav)
 
     # Dibuja los segmentos con flechas
     for segment in airspace.list_navsegments:

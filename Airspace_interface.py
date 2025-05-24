@@ -134,6 +134,25 @@ def WriteNavPoints():
         f.write(a)
     f.close()
     convertir_txt_a_kml("provakml.txt", "prova.kml")
+    filepath = filedialog.asksaveasfilename(defaultextension=".kml",
+                                             filetypes=[("Text files", "*.kml")],
+                                             title="Desa com...")
+    F = open("prova.kml", "r")
+    line = F.readline()
+    contingut = ""
+    while line != "":
+        contingut = contingut + line
+        line = F.readline()
+
+    F.close()
+
+    if filepath:
+        with open(filepath, "w") as f:
+            f.write(contingut)
+        print(f"Arxiu desat a: {filepath}")
+    fitxer_temporal = "prova.kml"
+    if os.path.exists(fitxer_temporal):
+        os.remove(fitxer_temporal)
 
 #Mida
 root=tk.Tk()
