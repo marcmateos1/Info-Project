@@ -75,6 +75,7 @@ def PlotNode(g, nameOrigin):
     """Dibuja el grafo resaltando el nodo de origen y sus vecinos."""
     node_origin = next((node for node in g.nodes if node.name == nameOrigin), None)
     if node_origin is None:
+        print("Selecciona el node per saber els veïns")
         return False  # El nodo no existe
 
     #plt.figure(figsize=(10, 7)) dimensionar grafic
@@ -258,10 +259,14 @@ def CreateGraph_2():
     return G
 
 def Reachability(graph, nodename):
+    origin=None
     for node in graph.nodes:
         if nodename==node.name:
             origin=node
             break
+    if origin==None:
+        print("Error, node no trobat")
+        return None
     i=0
 
     found=False

@@ -63,27 +63,29 @@ def CarregarFicher():
 
 def showtext():
     messagebox.showinfo("Text introduït: ", entry.get())
-    node_origin_for_grafos=entry.get()
-    print(node_origin_for_grafos)
 
 def showgrafoexemple():
     A = CreateGraph_1()
     Plot(A)
 
 def showgrafoexemple_vaeïns():
-    A = CreateGraph_1()
     node_origin_for_grafos=entry.get()
-    PlotNode(A, node_origin_for_grafos)
-
+    if isinstance(node_origin_for_grafos, str):
+        A = CreateGraph_1()
+        PlotNode(A, node_origin_for_grafos)
+    else:
+        print("Selecciona node per saber els veïns")
 def showgrafofromfiles():
     A = CreateGraphFromFiles(selected_file)
     Plot(A)
 
 def showgrafofromfiles_veins():
-    A= CreateGraphFromFiles(selected_file)
     node_origin_for_grafos = entry.get()
-    PlotNode(A, node_origin_for_grafos)
-
+    if isinstance(node_origin_for_grafos, str):
+        A= CreateGraphFromFiles(selected_file)
+        PlotNode(A, node_origin_for_grafos)
+    else:
+        print("Selecciona node per saber els veïns")
 def AddNodeToTheFile():
     messagebox.showinfo("Text introduït: ", entry_node.get())
     newtext=entry_node.get()
@@ -142,9 +144,12 @@ def FindReachability():
     origin_reachability=entry_nou.get()
 
 def ShowReachability():
-    G = CreateGraph_1()
-    n=Reachability(G, origin_reachability)
-    Plot_All_Paths(G,n)
+    if isinstance(origin_reachability, str):
+        G = CreateGraph_1()
+        n=Reachability(G, origin_reachability)
+        Plot_All_Paths(G,n)
+    else:
+        print("Selecciona origen")
 
 def NodesForShortestPath():
     global origin_shortest
@@ -156,20 +161,28 @@ def NodesForShortestPath():
     dest_shortest=info[1]
 
 def ShowShortest():
-    G=CreateGraph_1()
-    n=FindShortestPath(G, origin_shortest, dest_shortest)
-    print(n)
-    PlotPath(G,n)
-
+    if isinstance(origin_shortest, str) and isinstance(dest_shortest, str):
+        G=CreateGraph_1()
+        n=FindShortestPath(G, origin_shortest, dest_shortest)
+        #print(n)
+        PlotPath(G,n)
+    else:
+        print("Selecciona origen i destí")
 def ShowShortestForFiles():
-    G=CreateGraphFromFiles(selected_file)
-    n=FindShortestPath(G, origin_shortest, dest_shortest)
-    PlotPath(G,n)
+    if isinstance(origin_shortest, str) and isinstance(dest_shortest, str):
+        G=CreateGraphFromFiles(selected_file)
+        n=FindShortestPath(G, origin_shortest, dest_shortest)
+        PlotPath(G,n)
+    else:
+        print("Selecciona origen i destí")
 
 def ShowReachablityForFiles():
-    G = CreateGraphFromFiles(selected_file)
-    n = Reachability(G, origin_reachability)
-    Plot_All_Paths(G, n)
+    if isinstance(origin_reachability, str):
+        G = CreateGraphFromFiles(selected_file)
+        n = Reachability(G, origin_reachability)
+        Plot_All_Paths(G, n)
+    else:
+        print("Selecciona origen")
 
 
 #li donem  mida i títol a la finestra i creem les files i columnes necessàries //estructura de la finestra
