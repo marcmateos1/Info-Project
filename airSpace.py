@@ -5,11 +5,13 @@ import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from path import Path, AddNavDistToMap
 
+
 class AirSpace:
     def __init__(self):
         self.list_navpoints=[]
         self.list_navsegments=[]
         self.list_navairports=[]
+        self.nav_list=[]
 
 def LoadNavPoints(file, airspace):
     F=open(file, "r")
@@ -55,12 +57,13 @@ def LoadNavAirports(file,airspace):
             i += 1
 
 def PlotMap(airspace):
+    airspace.nav_list=[]
     fig=Figure()
     ax=fig.add_subplot(111)
     for navpoint in airspace.list_navpoints:
         ax.scatter(navpoint.longitud, navpoint.latitud, color="blue", s=10)
         ax.text(navpoint.longitud, navpoint.latitud, navpoint.name, fontsize=6, color="black")
-
+        airspace.nav_list.append(navpoint)
     for segment in airspace.list_navsegments:
 
         found_origin=False
@@ -102,6 +105,7 @@ def PlotMap(airspace):
 
 def NeighboursMap(airspace, origen):
     fig=Figure()
+    nav_list=[]
     ax=fig.add_subplot(111)
     nav_buscat=None
     for navpoint in airspace.list_navpoints:
@@ -118,6 +122,8 @@ def NeighboursMap(airspace, origen):
 
     ax.scatter(nav_buscat.longitud, nav_buscat.latitud, color="blue", s=10)
 
+    nav_list.append(nav_buscat)
+
     for segment in airspace.list_navsegments:
 
         found_origin=False
@@ -128,11 +134,12 @@ def NeighboursMap(airspace, origen):
             if navpoints.number==segment.originnumber:
                 originnav=navpoints
                 found_origin=True
+                nav_list.append(originnav)
 
             elif navpoints.number==segment.destnumber:
                 destnav=navpoints
                 found_dest=True
-
+                nav_list.append(destnav)
             elif found_dest==True and found_origin==True:
                 break
 
@@ -344,3 +351,32 @@ def PlotReachabilityFromAirport(airspace, airport_name):
 
     return fig
 
+def kml_point(name, navpoint): #funcio per escriure cada navpoint en format kml
+    description=navpoint.name
+    longitude=navpoint.longitud
+    latitude=navpoint.latitud
+    return f"""
+    <Placemark>
+      <name>{name}</name>
+      <description>{description}</description>
+      <Point>
+        <coordinates>{longitude},{latitude}</coordinates>
+      </Point>
+    </Placemark>
+    """
+
+def kml_line(name, coords):
+    """
+    coords: list of (longitude, latitude)
+    """
+    coord_text = "\n".join([f"{lon},{lat}" for lon, lat in coords])
+    return f"""
+    <Placemark>
+      <name>{name}</name>
+      <LineString>
+        <coordinates>
+          {coord_text}
+        </coordinates>
+      </LineString>
+    </Placemark>
+    """

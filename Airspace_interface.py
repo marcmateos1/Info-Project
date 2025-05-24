@@ -14,6 +14,9 @@ fileAER="cat_aer.txt"
 fileNAV="cat_nav"
 fileSEG="cat_seg.txt"
 
+global nav_list2
+nav_list2 = []
+
 def LoadFileAER():
     global fileAER
     ruta_fitxerAER = filedialog.askopenfilename(
@@ -122,6 +125,15 @@ def ShowReach():
     grafR.draw()
     grafR.get_tk_widget().pack(fill="both",expand=True)
 
+def WriteNavPoints():
+    nav_list2=g.nav_list
+    print(nav_list2)
+    f=open("provakml.txt", "w")
+    for navpoint in nav_list2:
+        a=kml_point(navpoint.name, navpoint)
+        f.write(a)
+    f.close()
+
 #Mida
 root=tk.Tk()
 root.geometry("1000x600")
@@ -200,6 +212,11 @@ frameSeg.grid(row=0, column=2, sticky="nswe", padx=10, pady=10)
 botoSeg=tk.Button(frameSeg, text="IMPORT NAVIGATION SEGMENTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileSEG)
 botoSeg.pack(fill="x",pady=(0,20))
 
+
+frameSeg=tk.Frame(low_frame,bg="#e8eaf6")
+frameSeg.grid(row=0, column=2, sticky="nswe", padx=10, pady=10)
+botoSeg=tk.Button(frameSeg, text="PROVA", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=WriteNavPoints)
+botoSeg.pack(fill="x",pady=(0,20))
 #graf
 #fig=PlotMap(g)
 #graf=FigureCanvasTkAgg(fig,master=right_frame)
