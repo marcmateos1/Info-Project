@@ -186,12 +186,14 @@ def WriteSegments():
         os.remove(fitxer_temporal)
 #Mida
 root=tk.Tk()
-root.geometry("1000x600")
+root.geometry("1000x750")
 root.title("Interfaç gràfica de l'espai aeri de Catalunya")
 root.columnconfigure(0, weight=1)
 root.columnconfigure(1, weight=4)
 root.rowconfigure(0,weight=1)
 root.rowconfigure(1,weight=1)
+root.rowconfigure(2,weight=1)
+
 
 #columna esquerra
 left_frame = tk.Frame(root, bg="#ffffff", bd=2, relief="groove")
@@ -240,27 +242,46 @@ right_frame = tk.Frame(root, bg="#e8eaf6", bd=2, relief="groove")
 right_frame.grid(row=0, column=1, sticky="nswe", padx=10, pady=10)
 
 #fila sota
-low_frame=tk.Frame(root, bg="#e8eaf6", bd=2, relief="groove")
-low_frame.grid(row=1, column=0, columnspan=2,sticky="nswe", padx=10, pady=10)
-low_frame.columnconfigure([0,1,2],weight=1)
+low_frame1=tk.Frame(root, bg="#e8eaf6", bd=2, relief="groove")
+low_frame1.grid(row=1, column=0, columnspan=2,sticky="nswe", padx=10, pady=10)
+low_frame1.columnconfigure([0,1,2],weight=1)
 
 #botó aer
-frameAer=tk.Frame(low_frame,bg="#e8eaf6")
+frameAer=tk.Frame(low_frame1,bg="#e8eaf6")
 frameAer.grid(row=0, column=0, sticky="nswe", padx=10, pady=10)
 botoAer=tk.Button(frameAer, text="IMPORT AIRPORTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileAER)
-botoAer.pack(fill="x",pady=(0,20))
+botoAer.pack(fill="x",pady=(0,10))
 
 #botó nav
-frameNav=tk.Frame(low_frame,bg="#e8eaf6")
+frameNav=tk.Frame(low_frame1,bg="#e8eaf6")
 frameNav.grid(row=0, column=1, sticky="nswe", padx=10, pady=10)
 botoNav=tk.Button(frameNav, text="IMPORT NAVIGATION POINTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileNAV)
-botoNav.pack(fill="x",pady=(0,20))
+botoNav.pack(fill="x",pady=(0,10))
 
 #botó seg
-frameSeg=tk.Frame(low_frame,bg="#e8eaf6")
+frameSeg=tk.Frame(low_frame1,bg="#e8eaf6")
 frameSeg.grid(row=0, column=2, sticky="nswe", padx=10, pady=10)
 botoSeg=tk.Button(frameSeg, text="IMPORT NAVIGATION SEGMENTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileSEG)
-botoSeg.pack(fill="x",pady=(0,20))
+botoSeg.pack(fill="x",pady=(0,10))
+
+#fila sota 2
+low_frame2=tk.Frame(root, bg="#e8eaf6", bd=2, relief="groove")
+low_frame2.grid(row=2, column=0, columnspan=2,sticky="nswe", padx=10, pady=10)
+low_frame2.columnconfigure([0,1],weight=1)
+
+#botó kmlnav
+knavFrame=tk.Frame(low_frame2,bg="#e8eaf6")
+knavFrame.grid(row=0, column=0, sticky="nswe", padx=10, pady=10)
+knav=tk.Button(knavFrame, text="SAVE NAVPOINTS AS KML FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=WriteNavPoints)
+knav.pack(fill="x",pady=(0,20))
+
+#botó kmlseg
+ksegFrame=tk.Frame(low_frame2,bg="#e8eaf6")
+ksegFrame.grid(row=0, column=1, sticky="nswe", padx=10, pady=10)
+kseg=tk.Button(ksegFrame, text="SAVE SEGMENTS AS KML FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=WriteSegments)
+kseg.pack(fill="x",pady=(0,20))
+
+
 
 
 
