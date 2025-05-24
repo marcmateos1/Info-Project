@@ -329,12 +329,17 @@ def Plot_All_Paths(graph, reachable_nodes):
 
 
 def FindShortestPath(graph, origin, destination):
+    origin=None
+    destination=None
+
     for nodes in graph.nodes:
         if nodes.name==origin:
             origin=nodes
         elif nodes.name==destination:
             destination=nodes
-
+    if origin==None or destination==None:
+        print("Origen, destí o els dos nodes no s'han trobat")
+        return None
     camins_possibles=[]
 
     camino_inicial=Path()

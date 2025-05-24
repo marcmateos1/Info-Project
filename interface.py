@@ -147,7 +147,10 @@ def ShowReachability():
     if isinstance(origin_reachability, str):
         G = CreateGraph_1()
         n=Reachability(G, origin_reachability)
-        Plot_All_Paths(G,n)
+        if n==None:
+            return None
+        else:
+            Plot_All_Paths(G,n)
     else:
         print("Selecciona origen")
 
@@ -164,15 +167,20 @@ def ShowShortest():
     if isinstance(origin_shortest, str) and isinstance(dest_shortest, str):
         G=CreateGraph_1()
         n=FindShortestPath(G, origin_shortest, dest_shortest)
-        #print(n)
-        PlotPath(G,n)
+        if n==None:
+            return None
+        else:
+            PlotPath(G,n)
     else:
         print("Selecciona origen i destí")
 def ShowShortestForFiles():
     if isinstance(origin_shortest, str) and isinstance(dest_shortest, str):
         G=CreateGraphFromFiles(selected_file)
         n=FindShortestPath(G, origin_shortest, dest_shortest)
-        PlotPath(G,n)
+        if n==None:
+            return None
+        else:
+            PlotPath(G,n)
     else:
         print("Selecciona origen i destí")
 
@@ -180,7 +188,10 @@ def ShowReachablityForFiles():
     if isinstance(origin_reachability, str):
         G = CreateGraphFromFiles(selected_file)
         n = Reachability(G, origin_reachability)
-        Plot_All_Paths(G, n)
+        if n==None:
+            return None
+        else:
+            Plot_All_Paths(G, n)
     else:
         print("Selecciona origen")
 
