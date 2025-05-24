@@ -133,6 +133,7 @@ def WriteNavPoints():
         a=kml_point(navpoint.name, navpoint)
         f.write(a)
     f.close()
+    convertir_txt_a_kml("provakml.txt", "prova.kml")
 
 #Mida
 root=tk.Tk()

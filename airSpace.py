@@ -380,3 +380,23 @@ def kml_line(name, coords):
       </LineString>
     </Placemark>
     """
+
+def convertir_txt_a_kml(archivo_txt, archivo_kml):
+    # Leer el contenido del archivo .txt
+    with open(archivo_txt, 'r', encoding='utf-8') as f:
+        placemarks = f.read()
+
+    # Crear estructura KML completa
+    kml_completo = f'''<?xml version="1.0" encoding="UTF-8"?>
+<kml xmlns="http://www.opengis.net/kml/2.2">
+  <Document>
+{placemarks}
+  </Document>
+</kml>'''
+
+    # Guardar en nuevo archivo .kml
+    with open(archivo_kml, 'w', encoding='utf-8') as f:
+        f.write(kml_completo)
+
+    print(f"Archivo KML creado: {archivo_kml}")
+
