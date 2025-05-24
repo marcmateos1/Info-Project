@@ -154,6 +154,36 @@ def WriteNavPoints():
     if os.path.exists(fitxer_temporal):
         os.remove(fitxer_temporal)
 
+def WriteSegments():
+    seg_list=g.seg_list
+    info=""
+    for elements in seg_list:
+        a=kml_line(elements)
+        info=info+a
+    f=open("prova2kml.txt", "w")
+    f.write(info)
+    f.close()
+
+    convertir_txt_a_kml("prova2kml.txt", "prova2.kml")
+    filepath = filedialog.asksaveasfilename(defaultextension=".kml",
+                                            filetypes=[("Text files", "*.kml")],
+                                            title="Desa com...")
+    F = open("prova2.kml", "r")
+    line = F.readline()
+    contingut = ""
+    while line != "":
+        contingut = contingut + line
+        line = F.readline()
+
+    F.close()
+
+    if filepath:
+        with open(filepath, "w") as f:
+            f.write(contingut)
+        print(f"Arxiu desat a: {filepath}")
+    fitxer_temporal = "prova2.kml"
+    if os.path.exists(fitxer_temporal):
+        os.remove(fitxer_temporal)
 #Mida
 root=tk.Tk()
 root.geometry("1000x600")
@@ -233,10 +263,7 @@ botoSeg=tk.Button(frameSeg, text="IMPORT NAVIGATION SEGMENTS FILE", bg="#007acc"
 botoSeg.pack(fill="x",pady=(0,20))
 
 
-frameSeg=tk.Frame(low_frame,bg="#e8eaf6")
-frameSeg.grid(row=0, column=2, sticky="nswe", padx=10, pady=10)
-botoSeg=tk.Button(frameSeg, text="PROVA", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=WriteNavPoints)
-botoSeg.pack(fill="x",pady=(0,20))
+
 #graf
 #fig=PlotMap(g)
 #graf=FigureCanvasTkAgg(fig,master=right_frame)

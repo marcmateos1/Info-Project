@@ -12,6 +12,7 @@ class AirSpace:
         self.list_navsegments=[]
         self.list_navairports=[]
         self.nav_list=[]
+        self.seg_list=[]
 
 def LoadNavPoints(file, airspace):
     F=open(file, "r")
@@ -85,6 +86,8 @@ def PlotMap(airspace):
         latitud_values=[originnav.latitud, destnav.latitud]
         plt.plot(longitud_values, latitud_values, color="purple", linewidth=1)
 
+        airspace.seg_list.append([(originnav.longitud, originnav.latitud),(destnav.longitud,destnav.latitud)])
+
         mid_x = (originnav.longitud + destnav.longitud) / 2
         mid_y = (originnav.latitud + destnav.latitud) / 2
         ax.text(mid_x, mid_y, f"{segment.distance:.2f}", fontsize=5, color="black")
@@ -104,6 +107,7 @@ def PlotMap(airspace):
     return fig
 
 def NeighboursMap(airspace, origen):
+    airspace.seg_list=[]
     fig=Figure()
     airspace.nav_list=[]
     ax=fig.add_subplot(111)
@@ -146,6 +150,9 @@ def NeighboursMap(airspace, origen):
         if originnav==nav_buscat:
             longitud_values = [originnav.longitud, destnav.longitud]
             latitud_values = [originnav.latitud, destnav.latitud]
+
+            airspace.seg_list.append([(originnav.longitud, originnav.latitud), (destnav.longitud, destnav.latitud)])
+
             ax.plot(longitud_values, latitud_values, color="purple", linewidth=1)
             if originnav.name!=origen:
                 airspace.nav_list.append(originnav)
@@ -239,6 +246,7 @@ def FindShortestMap(airspace, origen, destino):
 
 def PlotShortestPath(airspace, path):
     airspace.nav_list=[]
+    airspace.seg_list=[]
     fig=Figure()
     ax=fig.add_subplot(111)
     # Dibuja todos los navpoints
@@ -260,6 +268,8 @@ def PlotShortestPath(airspace, path):
 
         dx = destino.longitud - origen.longitud
         dy = destino.latitud - origen.latitud
+
+        airspace.seg_list.append([(origen.longitud, origen.latitud), (destino.longitud, destino.latitud)])
 
         ax.arrow(
             origen.longitud, origen.latitud, dx, dy,
@@ -327,6 +337,7 @@ def ReachabilityFromAirport(airspace, airport_name):
 
 def PlotReachabilityFromAirport(airspace, airport_name):
     airspace.nav_list=[]
+    airspace.nav_list=[]
     fig=Figure()
     ax=fig.add_subplot(111)
     reachable_navpoints = ReachabilityFromAirport(airspace, airport_name)
@@ -343,6 +354,8 @@ def PlotReachabilityFromAirport(airspace, airport_name):
         if segment.originnumber in reachable_ids and segment.destnumber in reachable_ids:
             origin_nav = next(n for n in reachable_navpoints if n.number == segment.originnumber)
             dest_nav = next(n for n in reachable_navpoints if n.number == segment.destnumber)
+
+            airspace.seg_list.append([(origin_nav.longitud, origin_nav.latitud), (dest_nav.longitud, dest_nav.latitud)])
 
             dx = dest_nav.longitud - origin_nav.longitud
             dy = dest_nav.latitud - origin_nav.latitud
@@ -373,14 +386,14 @@ def kml_point(name, navpoint): #funcio per escriure cada navpoint en format kml
     </Placemark>
     """
 
-def kml_line(name, coords):
+def kml_line(coords):
     """
     coords: list of (longitude, latitude)
     """
-    coord_text = "\n".join([f"{lon},{lat}" for lon, lat in coords])
+    coord_text =  " ".join(f"{lon},{lat},0" for lon, lat in coords)
     return f"""
     <Placemark>
-      <name>{name}</name>
+      <name></name>
       <LineString>
         <coordinates>
           {coord_text}
