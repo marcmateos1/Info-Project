@@ -16,6 +16,7 @@ class AirSpace:
         self.seg_list=[]
 
 def LoadPlane(file, planeName):
+    global planeInfo
     F=open(file, "r")
     line=F.readline()
     found=False
@@ -29,7 +30,18 @@ def LoadPlane(file, planeName):
     if not found:
         print("NO AIRPLANE FOUND")
     F.close()
-    return planeInfo
+
+def Speed():
+    global planeInfo, distanciaTotal
+    speed=planeInfo.speed
+    time=distanciaTotal/speed
+    return time
+
+def Fuel():
+    global planeInfo, distanciaTotal
+    fuel=planeInfo.fuel
+    totalFuel=fuel*distanciaTotal
+    return totalFuel
 
 def LoadNavPoints(file, airspace):
     F=open(file, "r")
@@ -194,7 +206,7 @@ def NeighboursMap(airspace, origen):
     return fig
 
 def FindShortestMap(airspace, origen, destino):
-
+    global distanciaTotal
     nav_origen = None
     nav_destino = None
     a=False
@@ -255,6 +267,7 @@ def FindShortestMap(airspace, origen, destino):
         print("Camino más corto por distancia:")
         for nodo in resultado.nodelist:
             print(nodo.name, end=" → ")
+        distanciaTotal=resultado.total_distance
         print("FIN\nDistancia total:", resultado.total_distance)
         return resultado
     else:

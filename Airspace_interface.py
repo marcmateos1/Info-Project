@@ -101,7 +101,22 @@ def LoadFilePlane():
             f.writelines(contingut)
     else:
         print("No airplane list found")
+    return filePlane
 
+def SpeedFuel():
+    LoadFilePlane()
+    planeCode=ent4.get()
+    LoadPlane(filePlane,planeCode)
+    flighTime=Speed()
+    flightFuel=Fuel()
+    window=tk.Toplevel(root)
+    window.title("FLIGHT TIME AND FUEL USAGE")
+    label1=tk.Label(window,text=f"FLIGHT TIME: {flighTime:.2f}hours")
+    label1.pack(padx=10,pady=5)
+    label2=tk.Label(window,text=f"NEEDED FUEL: {flightFuel:.2f}litters")
+    label2.pack(padx=10,pady=5)
+    close1=tk.Button(window,text="Close",command=window.destroy)
+    close1.pack()
 
 def Airspace():
     CarregarDades()
@@ -268,7 +283,7 @@ ent2.pack(fill="x",pady=(0,10))
 #boto speed
 frame4=tk.Frame(framesp,bg="#e8eaf6")
 frame4.grid(row=0, column=1, sticky="nswe", padx=10, pady=10)
-boto4=tk.Button(frame4, text="INPUT AIRPLANE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=ShowSPath)
+boto4=tk.Button(frame4, text="INPUT AIRPLANE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=SpeedFuel)
 boto4.pack(fill="x",pady=(0,20))
 ent4=tk.Entry(frame4,font=("Segoe UI", 10))
 ent4.pack(fill="x",pady=(0,10))
