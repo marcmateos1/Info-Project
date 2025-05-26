@@ -221,13 +221,26 @@ boto1.pack(fill="x",pady=(0,20))
 ent1=tk.Entry(frame1,font=("Segoe UI", 10))
 ent1.pack(fill="x",pady=(0,10))
 
+#framse spath
+framesp=tk.Frame(left_frame1,bg="#e8eaf6")
+framesp.pack(fill="both", expand=True, pady=10, padx=10)
+framesp.columnconfigure([0,1],weight=1)
+
 #botó sPath
-frame2=tk.Frame(left_frame1,bg="#e8eaf6")
-frame2.pack(fill="both", expand=True, pady=10, padx=10)
+frame2=tk.Frame(framesp,bg="#e8eaf6")
+frame2.grid(row=0, column=0, sticky="nswe", padx=10, pady=10)
 boto2=tk.Button(frame2, text="SHORTEST PATH", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=ShowSPath)
 boto2.pack(fill="x",pady=(0,20))
 ent2=tk.Entry(frame2,font=("Segoe UI", 10))
 ent2.pack(fill="x",pady=(0,10))
+
+#boto speed
+frame4=tk.Frame(framesp,bg="#e8eaf6")
+frame4.grid(row=0, column=1, sticky="nswe", padx=10, pady=10)
+boto4=tk.Button(frame4, text="INPUT AIRPLANE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=ShowSPath)
+boto4.pack(fill="x",pady=(0,20))
+ent4=tk.Entry(frame4,font=("Segoe UI", 10))
+ent4.pack(fill="x",pady=(0,10))
 
 #botó Reach
 frame3=tk.Frame(left_frame1,bg="#e8eaf6")
@@ -245,6 +258,7 @@ right_frame.grid(row=0, column=1, sticky="nswe", padx=10, pady=10)
 low_frame1=tk.Frame(root, bg="#e8eaf6", bd=2, relief="groove")
 low_frame1.grid(row=1, column=0, columnspan=2,sticky="nswe", padx=10, pady=10)
 low_frame1.columnconfigure([0,1,2],weight=1)
+low_frame1.rowconfigure([0,1],weight=1)
 
 #botó aer
 frameAer=tk.Frame(low_frame1,bg="#e8eaf6")
@@ -263,6 +277,12 @@ frameSeg=tk.Frame(low_frame1,bg="#e8eaf6")
 frameSeg.grid(row=0, column=2, sticky="nswe", padx=10, pady=10)
 botoSeg=tk.Button(frameSeg, text="IMPORT NAVIGATION SEGMENTS FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileSEG)
 botoSeg.pack(fill="x",pady=(0,10))
+
+#botó speed
+frameSpeed=tk.Frame(low_frame1,bg="#e8eaf6")
+frameSpeed.grid(row=1, column=0, columnspan=3,sticky="nswe", padx=10, pady=10)
+botoSpeed=tk.Button(frameSpeed, text="IMPORT AIRPLANE SPEED FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFileSEG)
+botoSpeed.pack(fill="x",pady=(0,10))
 
 #fila sota 2
 low_frame2=tk.Frame(root, bg="#e8eaf6", bd=2, relief="groove")
