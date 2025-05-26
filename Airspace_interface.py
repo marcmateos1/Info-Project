@@ -61,6 +61,20 @@ def LoadFileSEG():
         with open(fileSEG, "w") as f:
             f.writelines(contingut)
 
+def LoadFileSpeed():
+    global fileSpeed
+    ruta_fitxerSpeed = filedialog.askopenfilename(
+        title="Selecciona un fitxer .txt",
+        filetypes=[("Fitxers de text", "*.txt")]
+    )
+    if ruta_fitxerSpeed:
+        print("Has seleccionat:", ruta_fitxerSpeed)
+        with open(ruta_fitxerSpeed, "r", encoding="utf-8") as fitxerSpeed:
+            contingutSpeed = fitxerSpeed.read()
+        fileSpeed="new_data_SEG1.txt"
+        with open(fileSpeed, "w") as f:
+            f.writelines(contingutSpeed)
+
 
 def CarregarDades():
     global g
@@ -71,6 +85,22 @@ def CarregarDades():
     LoadNavPoints(fileNAV, g)
     LoadNavSegments(fileSEG, g)
     LoadNavAirports(fileAER, g)
+
+def LoadFilePlane():
+    global filePlane
+    ruta_fitxerPlane = filedialog.askopenfilename(
+        title="Selecciona un fitxer .txt",
+        filetypes=[("Fitxers de text", "*.txt")]
+    )
+    if ruta_fitxerPlane:
+        print("Has seleccionat:", ruta_fitxerPlane)
+        with open(ruta_fitxerPlane, "r", encoding="utf-8") as fitxer:
+            contingut = fitxer.read()
+        filePlane="new_data_NAV.txt"
+        with open(filePlane, "w") as f:
+            f.writelines(contingut)
+    else:
+        print("No airplane list found")
 
 def Airspace():
     CarregarDades()

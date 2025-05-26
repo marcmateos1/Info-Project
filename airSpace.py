@@ -1,6 +1,7 @@
 from navAirpoint import NavAirport
 from navPoint import NavPoint
 from navSegment import NavSegment
+from planeSpeed import PlaneSpeedFuel
 import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from path import Path, AddNavDistToMap
@@ -13,6 +14,22 @@ class AirSpace:
         self.list_navairports=[]
         self.nav_list=[]
         self.seg_list=[]
+
+def LoadPlane(file, planeName):
+    F=open(file, "r")
+    line=F.readline()
+    found=False
+    while line!="" and not found:
+        trozos=line.rstrip().split()
+        if trozos[0]==planeName:
+            planeInfo=PlaneSpeedFuel(trozos[0], trozos[1], trozos[2])
+            found=True
+        else:
+            line=F.readline()
+    if not found:
+        print("NO AIRPLANE FOUND")
+    F.close()
+    return planeInfo
 
 def LoadNavPoints(file, airspace):
     F=open(file, "r")
@@ -421,3 +438,19 @@ def convertir_txt_a_kml(archivo_txt, archivo_kml):
 
     print(f"Archivo KML creado: {archivo_kml}")
 
+def LoadSpeeds(plane,file):
+    global speed
+    F=open(file,"r")
+    line=F.readline()
+    trobat=False
+    while line!="" and not trobat:
+        trossos=line.rstrip().split()
+        if plane==trossos[0]:
+            speed=trossos[1]
+            trobat=True
+        else:
+            line=F.readline()
+    if not trobat:
+        print("Airplane not found")
+
+    return speed
