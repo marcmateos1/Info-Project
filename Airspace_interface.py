@@ -5,12 +5,9 @@ from tkinter import filedialog
 from airSpace import *
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
-#g=AirSpace()
-#LoadNavPoints("cat_nav", g)
-#LoadNavSegments("cat_seg.txt", g)
-#LoadNavAirports("cat_aer.txt", g)
 #per posar el graf dins l'interfaç, importem el FigureCanvasTkAgg
 
+#carregar els arxius necessaris com a predeterminats
 fileAER="cat_aer.txt"
 fileNAV="cat_nav"
 fileSEG="cat_seg.txt"
@@ -20,6 +17,8 @@ firstPATH=False
 global nav_list2
 nav_list2 = []
 
+#creem funcions que carreguin els fitxers dels aeroports, navpoints i segments.
+# Predeterminat hi haurà posat l'espai aeri CAT
 def LoadFileAER():
     global fileAER
     ruta_fitxerAER = filedialog.askopenfilename(
@@ -62,6 +61,7 @@ def LoadFileSEG():
         with open(fileSEG, "w") as f:
             f.writelines(contingut)
 
+#carreguem totes les dades en l'espai aeri
 def CarregarDades():
     global g
     global fileAER
@@ -72,6 +72,7 @@ def CarregarDades():
     LoadNavSegments(fileSEG, g)
     LoadNavAirports(fileAER, g)
 
+#carregar el fixter dels avions
 def LoadFilePlane():
     global filePLANE
     ruta_fitxerPlane = filedialog.askopenfilename(
@@ -86,8 +87,8 @@ def LoadFilePlane():
             f.writelines(contingut)
     else:
         print("No airplane list found")
-    #return filePlane
 
+#mostrar el temps i el combustible en una finestreta
 def SpeedFuel():
     global planeInfo
     planeCode = ent4.get()
@@ -121,6 +122,7 @@ def SpeedFuel():
         close2 = tk.Button(window1, text="Close", command=window1.destroy)
         close2.pack()
 
+#mostra l'espai aeri a l'interfaç
 def Airspace():
     global firstPATH
     firstPATH=False
@@ -133,6 +135,7 @@ def Airspace():
     graf.draw()
     graf.get_tk_widget().pack(fill="both", expand=True)
 
+#mostra el grafo veins a l'interfaç
 def Neighbours():
     global firstPATH
     firstPATH=False
@@ -153,6 +156,7 @@ def Neighbours():
         close2 = tk.Button(window1, text="Close", command=window1.destroy)
         close2.pack()
 
+#busca l'entrada pel shortest path
 def AirportsForShortestPath():
     global SP_origin
     global SP_dest
@@ -164,6 +168,7 @@ def AirportsForShortestPath():
     except:
         print("Format no valid, has d'escriure:")
 
+#mostra el grafo del shortest path
 def ShowSPath():
     global firstPATH
     global confirm
@@ -200,6 +205,7 @@ def ShowSPath():
         print("<ORIGEN DESTÍ>")
         confirm=False
 
+#mostr el grafo del reachability
 def ShowReach():
     global firstPATH
     firstPATH=False
@@ -220,6 +226,7 @@ def ShowReach():
         close2 = tk.Button(window1, text="Close", command=window1.destroy)
         close2.pack()
 
+#transformar els navpoints obtinguts a arxiu kml per exportar a google earth. despres ho farem amb els navesgments
 def WriteNavPoints():
     nav_list2=g.nav_list
     print(nav_list2)
@@ -279,6 +286,8 @@ def WriteSegments():
     fitxer_temporal = "prova2.kml"
     if os.path.exists(fitxer_temporal):
         os.remove(fitxer_temporal)
+
+#---------DIBUIXEM LA INTERFAÇ------------
 #Mida
 root=tk.Tk()
 root.geometry("1000x750")
