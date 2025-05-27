@@ -24,7 +24,6 @@ def LoadPlane(file, planeName):
         trozos=line.rstrip().split()
         if trozos[0]==planeName:
             planeInfo=PlaneSpeedFuel(trozos[0], trozos[1], trozos[2])
-            print("SI")
             found=True
             break
         line=F.readline()

@@ -92,7 +92,7 @@ def SpeedFuel():
     global planeInfo
     planeCode = ent4.get()
     planeInfo=LoadPlane(filePLANE, planeCode)
-    if firstPATH==True:
+    if firstPATH==True and confirm==True:
         if planeInfo!=None:
             flighTime=Speed()
             flightFuel=Fuel()
@@ -106,15 +106,20 @@ def SpeedFuel():
             close1=tk.Button(window,text="Close",command=window.destroy)
             close1.pack()
         else:
-            print("Avió no trobat")
+            print(f"Avió {planeCode} no trobat")
+            window1 = tk.Toplevel(root)
+            window1.title("ERROR")
+            label3 = tk.Label(window1, text=f"Avió {planeCode} no trobat")
+            label3.pack(padx=10, pady=5)
+            close2 = tk.Button(window1, text="Close", command=window1.destroy)
+            close2.pack()
     else:
         window1 = tk.Toplevel(root)
         window1.title("ERROR")
-        label3 = tk.Label(window1, text="INPUT SHORTEST PATH FIRST")
+        label3 = tk.Label(window1, text="INPUT SHORTEST PATH FIRST WITH VALID FORMAT")
         label3.pack(padx=10, pady=5)
         close2 = tk.Button(window1, text="Close", command=window1.destroy)
         close2.pack()
-
 
 def Airspace():
     global firstPATH
@@ -140,6 +145,13 @@ def Neighbours():
     grafn = FigureCanvasTkAgg(fign, master=right_frame)
     grafn.draw()
     grafn.get_tk_widget().pack(fill="both",expand=True)
+    if fign==None:
+        window1 = tk.Toplevel(root)
+        window1.title("ERROR")
+        label3 = tk.Label(window1, text=f"Navpoint {neighbour_origin} no trobat")
+        label3.pack(padx=10, pady=5)
+        close2 = tk.Button(window1, text="Close", command=window1.destroy)
+        close2.pack()
 
 def AirportsForShortestPath():
     global SP_origin
@@ -154,7 +166,9 @@ def AirportsForShortestPath():
 
 def ShowSPath():
     global firstPATH
+    global confirm
     firstPATH=True
+    confirm=False
     try:
         CarregarDades()
         AirportsForShortestPath()
@@ -167,8 +181,25 @@ def ShowSPath():
             grafSP=FigureCanvasTkAgg(figSP,master=right_frame)
             grafSP.draw()
             grafSP.get_tk_widget().pack(fill="both",expand=True)
+            confirm=True
+        else:
+            window1 = tk.Toplevel(root)
+            window1.title("ERROR")
+            label3 = tk.Label(window1, text="Origen o destí no trobats")
+            label3.pack(padx=10, pady=5)
+            close2 = tk.Button(window1, text="Close", command=window1.destroy)
+            close2.pack()
+            confirm=False
     except:
+        window1 = tk.Toplevel(root)
+        window1.title("ERROR")
+        label3 = tk.Label(window1, text="Format incorrecte <ORIGEN DESTÍ>")
+        label3.pack(padx=10, pady=5)
+        close2 = tk.Button(window1, text="Close", command=window1.destroy)
+        close2.pack()
         print("<ORIGEN DESTÍ>")
+        confirm=False
+
 def ShowReach():
     global firstPATH
     firstPATH=False
@@ -181,6 +212,13 @@ def ShowReach():
     grafR = FigureCanvasTkAgg(figR, master=right_frame)
     grafR.draw()
     grafR.get_tk_widget().pack(fill="both",expand=True)
+    if figR==None:
+        window1 = tk.Toplevel(root)
+        window1.title("ERROR")
+        label3 = tk.Label(window1, text=f"Navpoint {reach_origin} no trobat")
+        label3.pack(padx=10, pady=5)
+        close2 = tk.Button(window1, text="Close", command=window1.destroy)
+        close2.pack()
 
 def WriteNavPoints():
     nav_list2=g.nav_list
