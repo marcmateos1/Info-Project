@@ -133,7 +133,6 @@ def PlotForPath(g, ax):
     ax.set_ylabel("Y")
     ax.grid(True)
 
-
 def CreateGraphFromFiles(file):
     M = Graph()
     F = open(file, "r")  # llegir arxiu
@@ -214,7 +213,6 @@ def CreateGraph_1():
 
     return G
 
-
 def CreateGraph_2():
     G = Graph()
     AddNode(G, Node("A", 3, 26))
@@ -288,8 +286,6 @@ def Reachability(graph, nodename):
         print(reach[0].name)
         return reach
 
-
-
 def Plot_All_Paths(graph, reachable_nodes):
     fig, ax = plt.subplots()
     PlotForPath(graph, ax)
@@ -326,7 +322,6 @@ def Plot_All_Paths(graph, reachable_nodes):
                               length_includes_head=True, color="green")
     plt.scatter(origin.x, origin.y, color="red", s=100)
     plt.show()
-
 
 def FindShortestPath(graph, origin, destination):
     origen=None
