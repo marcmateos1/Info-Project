@@ -7,6 +7,7 @@ from matplotlib.figure import Figure
 from path import Path, AddNavDistToMap
 
 planeInfo=None
+#creem la classe airspace, que agrupa les classes navpoints, navsegments i navaiports
 class AirSpace:
     def __init__(self):
         self.list_navpoints=[]
@@ -15,6 +16,7 @@ class AirSpace:
         self.nav_list=[]
         self.seg_list=[]
 
+#llegim el fitxer dels avions i el guardem a la classe
 def LoadPlane(file, planeName):
     global planeInfo
     F=open(file, "r")
@@ -32,19 +34,22 @@ def LoadPlane(file, planeName):
         planeInfo=None
     return planeInfo
 
+#calculem el temps de vol
 def Speed():
     global planeInfo, distanciaTotal
     speed=planeInfo.speed
     time=distanciaTotal/speed
     return time
 
+#calculem el combustible necessari
 def Fuel():
     global planeInfo, distanciaTotal
     fuel=planeInfo.fuel
     totalFuel=fuel*distanciaTotal
     return totalFuel
 
-
+#carreguem els navpoints i els guardem a la classe, despres en una llista dins la classe airspace.
+# Fem igual amb els segments i aeroports
 def LoadNavPoints(file, airspace):
     F=open(file, "r")
     line=F.readline()
@@ -88,6 +93,8 @@ def LoadNavAirports(file,airspace):
         else:
             i += 1
 
+#dibuixem el mapa de l'espai aeri. s'ha utilitzat la llibreria FigureCanvasTkAgg de
+# matplotlib per mostrar els plots a la interface
 def PlotMap(airspace):
     airspace.nav_list=[]
     fig=Figure()
@@ -137,6 +144,7 @@ def PlotMap(airspace):
 
     return fig
 
+#dibuixar el mapa dels veins
 def NeighboursMap(airspace, origen):
     airspace.seg_list=[]
     fig=Figure()
@@ -208,6 +216,7 @@ def NeighboursMap(airspace, origen):
 
     return fig
 
+#trobar el cami mes curt
 def FindShortestMap(airspace, origen, destino):
     global distanciaTotal
     nav_origen = None
@@ -277,6 +286,7 @@ def FindShortestMap(airspace, origen, destino):
         print("No se encontró camino.")
         return None
 
+#dibuixar el cami del spath
 def PlotShortestPath(airspace, path):
     airspace.nav_list=[]
     airspace.seg_list=[]
@@ -322,7 +332,7 @@ def PlotShortestPath(airspace, path):
 
     return fig
 
-
+#fer reachability
 def ReachabilityFromAirport(airspace, airport_name):
     # Buscar el aeropuerto
     airport = None
@@ -368,6 +378,7 @@ def ReachabilityFromAirport(airspace, airport_name):
     # Devolver lista de NavPoints alcanzables
     return [nav for nav in airspace.list_navpoints if nav.number in visited]
 
+#dibuixar reachability
 def PlotReachabilityFromAirport(airspace, airport_name):
 
     airspace.nav_list=[]
@@ -422,6 +433,7 @@ def kml_point(name, navpoint): #funcio per escriure cada navpoint en format kml
     </Placemark>
     """
 
+#passar els navsegments en format kml
 def kml_line(coords):
     """
     coords: list of (longitude, latitude)
@@ -438,6 +450,7 @@ def kml_line(coords):
     </Placemark>
     """
 
+#convertir l'arxiu txt a kml
 def convertir_txt_a_kml(archivo_txt, archivo_kml):
     # Leer el contenido del archivo .txt
     with open(archivo_txt, 'r', encoding='utf-8') as f:
@@ -456,20 +469,3 @@ def convertir_txt_a_kml(archivo_txt, archivo_kml):
         f.write(kml_completo)
 
     print(f"Archivo KML creado: {archivo_kml}")
-
-def LoadSpeeds(plane,file):
-    global speed
-    F=open(file,"r")
-    line=F.readline()
-    trobat=False
-    while line!="" and not trobat:
-        trossos=line.rstrip().split()
-        if plane==trossos[0]:
-            speed=trossos[1]
-            trobat=True
-        else:
-            line=F.readline()
-    if not trobat:
-        print("Airplane not found")
-
-    return speed
