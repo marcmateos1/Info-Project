@@ -261,7 +261,7 @@ def CreateGraph_2():
 def Reachability(graph, nodename):
     origin=None
     for node in graph.nodes:
-        if nodename==node.name:
+        if nodename==nodename:
             origin=node
             break
     if origin==None:
@@ -329,15 +329,17 @@ def Plot_All_Paths(graph, reachable_nodes):
 
 
 def FindShortestPath(graph, origin, destination):
-    origin=None
-    destination=None
+    origen=None
+    destino=None
 
     for nodes in graph.nodes:
         if nodes.name==origin:
             origin=nodes
+            origen=1
         elif nodes.name==destination:
             destination=nodes
-    if origin==None or destination==None:
+            destino=1
+    if origen==None or destino==None:
         print("Origen, destí o els dos nodes no s'han trobat")
         return None
     camins_possibles=[]
