@@ -6,7 +6,7 @@ import matplotlib.pyplot as plt
 from matplotlib.figure import Figure
 from path import Path, AddNavDistToMap
 
-
+planeInfo=None
 class AirSpace:
     def __init__(self):
         self.list_navpoints=[]
@@ -20,16 +20,18 @@ def LoadPlane(file, planeName):
     F=open(file, "r")
     line=F.readline()
     found=False
-    while line!="" and not found:
+    while line!="":
         trozos=line.rstrip().split()
         if trozos[0]==planeName:
             planeInfo=PlaneSpeedFuel(trozos[0], trozos[1], trozos[2])
+            print("SI")
             found=True
-        else:
-            line=F.readline()
-    if not found:
-        print("NO AIRPLANE FOUND")
+            break
+        line=F.readline()
     F.close()
+    if found==False:
+        planeInfo==None
+    return planeInfo
 
 def Speed():
     global planeInfo, distanciaTotal
@@ -42,6 +44,7 @@ def Fuel():
     fuel=planeInfo.fuel
     totalFuel=fuel*distanciaTotal
     return totalFuel
+
 
 def LoadNavPoints(file, airspace):
     F=open(file, "r")

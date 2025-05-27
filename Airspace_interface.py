@@ -89,27 +89,33 @@ def LoadFilePlane():
     #return filePlane
 
 def SpeedFuel():
+    global planeInfo
+    planeCode = ent4.get()
+    planeInfo=LoadPlane(filePLANE, planeCode)
+
     if firstPATH==True:
-        planeCode=ent4.get()
-        LoadPlane(filePLANE,planeCode)
-        flighTime=Speed()
-        flightFuel=Fuel()
-        window=tk.Toplevel(root)
-        window.title("FLIGHT TIME AND FUEL USAGE")
-        label1=tk.Label(window,text=f"FLIGHT TIME: {flighTime:.2f}hours") #escriure només amb dos decimals el .2f
-        print("In flight time calculation, the take of and landing are not taken into consideration.")
-        label1.pack(padx=10,pady=5)
-        label2=tk.Label(window,text=f"NEEDED FUEL: {flightFuel:.2f}litters")
-        label2.pack(padx=10,pady=5)
-        close1=tk.Button(window,text="Close",command=window.destroy)
-        close1.pack()
+        if planeInfo!=None:
+            flighTime=Speed()
+            flightFuel=Fuel()
+            window=tk.Toplevel(root)
+            window.title("FLIGHT TIME AND FUEL USAGE")
+            label1=tk.Label(window,text=f"FLIGHT TIME: {flighTime:.2f}hours") #escriure només amb dos decimals el .2f
+            print("In flight time calculation, the take of and landing are not taken into consideration.")
+            label1.pack(padx=10,pady=5)
+            label2=tk.Label(window,text=f"NEEDED FUEL: {flightFuel:.2f}litters")
+            label2.pack(padx=10,pady=5)
+            close1=tk.Button(window,text="Close",command=window.destroy)
+            close1.pack()
+        else:
+            print("Avió no trobat")
     else:
-        window1=tk.Toplevel(root)
+        window1 = tk.Toplevel(root)
         window1.title("ERROR")
-        label3=tk.Label(window1,text="INPUT SHORTEST PATH FIRST")
-        label3.pack(padx=10,pady=5)
-        close2=tk.Button(window1,text="Close",command=window1.destroy)
+        label3 = tk.Label(window1, text="INPUT SHORTEST PATH FIRST")
+        label3.pack(padx=10, pady=5)
+        close2 = tk.Button(window1, text="Close", command=window1.destroy)
         close2.pack()
+
 
 def Airspace():
     global firstPATH
