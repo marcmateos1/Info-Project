@@ -146,6 +146,7 @@ def NeighboursMap(airspace, origen):
             nav_buscat=navpoint
             break
     if nav_buscat==None:
+        print(f"El navpoint {origen} no s'ha trobat")
         return None
 
     for navpoint in airspace.list_navpoints:
@@ -329,7 +330,7 @@ def ReachabilityFromAirport(airspace, airport_name):
             break
     if airport is None:
         print(f"Aeropuerto '{airport_name}' no encontrado.")
-        return []
+        return None
 
     # Buscar NavPoints asociados a sus SIDs
     starting_navpoints = []
@@ -366,11 +367,14 @@ def ReachabilityFromAirport(airspace, airport_name):
     return [nav for nav in airspace.list_navpoints if nav.number in visited]
 
 def PlotReachabilityFromAirport(airspace, airport_name):
+
     airspace.nav_list=[]
     airspace.nav_list=[]
     fig=Figure()
     ax=fig.add_subplot(111)
     reachable_navpoints = ReachabilityFromAirport(airspace, airport_name)
+    if reachable_navpoints==None:
+        return None
     reachable_ids = set(nav.number for nav in reachable_navpoints)
 
     # Dibuja los navpoints

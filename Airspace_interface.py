@@ -10,6 +10,7 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 #LoadNavSegments("cat_seg.txt", g)
 #LoadNavAirports("cat_aer.txt", g)
 #per posar el graf dins l'interfaç, importem el FigureCanvasTkAgg
+
 fileAER="cat_aer.txt"
 fileNAV="cat_nav"
 fileSEG="cat_seg.txt"
@@ -33,7 +34,6 @@ def LoadFileAER():
         with open(fileAER, "w") as f:
             f.writelines(contingut)
 
-
 def LoadFileNAV():
     global fileNAV
     ruta_fitxerNAV = filedialog.askopenfilename(
@@ -47,7 +47,6 @@ def LoadFileNAV():
         fileNAV="new_data_NAV.txt"
         with open(fileNAV, "w") as f:
             f.writelines(contingut)
-
 
 def LoadFileSEG():
     global fileSEG
@@ -140,26 +139,31 @@ def Neighbours():
 def AirportsForShortestPath():
     global SP_origin
     global SP_dest
-    info=ent2.get().split(" ")
-    print(info)
-    SP_origin=info[0]
-    SP_dest=info[1]
+    try:
+        info=ent2.get().split(" ")
+        print(info)
+        SP_origin=info[0]
+        SP_dest=info[1]
+    except:
+        print("Format no valid, has d'escriure:")
 
 def ShowSPath():
     global firstPATH
     firstPATH=True
-    CarregarDades()
-    AirportsForShortestPath()
-    #destruim l'anterior grafic:
-    for widget in right_frame.winfo_children():
-        widget.destroy()
-    path=FindShortestMap(g,SP_origin,SP_dest)
-    if path!=None:
-        figSP=PlotShortestPath(g,path)
-        grafSP=FigureCanvasTkAgg(figSP,master=right_frame)
-        grafSP.draw()
-        grafSP.get_tk_widget().pack(fill="both",expand=True)
-
+    try:
+        CarregarDades()
+        AirportsForShortestPath()
+        #destruim l'anterior grafic:
+        for widget in right_frame.winfo_children():
+            widget.destroy()
+        path=FindShortestMap(g,SP_origin,SP_dest)
+        if path!=None:
+            figSP=PlotShortestPath(g,path)
+            grafSP=FigureCanvasTkAgg(figSP,master=right_frame)
+            grafSP.draw()
+            grafSP.get_tk_widget().pack(fill="both",expand=True)
+    except:
+        print("<ORIGEN DESTÍ>")
 def ShowReach():
     global firstPATH
     firstPATH=False
