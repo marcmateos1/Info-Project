@@ -93,10 +93,9 @@ def LoadFilePlane():
         filetypes=[("Fitxers de text", "*.txt")]
     )
     if ruta_fitxerPlane:
-        print("Has seleccionat:", ruta_fitxerPlane)
         with open(ruta_fitxerPlane, "r", encoding="utf-8") as fitxer:
             contingut = fitxer.read()
-        filePlane="new_data_NAV.txt"
+        filePlane="new_data_Plane.txt"
         with open(filePlane, "w") as f:
             f.writelines(contingut)
     else:
@@ -112,6 +111,7 @@ def SpeedFuel():
     window=tk.Toplevel(root)
     window.title("FLIGHT TIME AND FUEL USAGE")
     label1=tk.Label(window,text=f"FLIGHT TIME: {flighTime:.2f}hours")
+    print("In flight time calculation, the take of and landing are not taken into consideration.")
     label1.pack(padx=10,pady=5)
     label2=tk.Label(window,text=f"NEEDED FUEL: {flightFuel:.2f}litters")
     label2.pack(padx=10,pady=5)
