@@ -92,7 +92,6 @@ def SpeedFuel():
     global planeInfo
     planeCode = ent4.get()
     planeInfo=LoadPlane(filePLANE, planeCode)
-
     if firstPATH==True:
         if planeInfo!=None:
             flighTime=Speed()

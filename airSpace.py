@@ -30,7 +30,7 @@ def LoadPlane(file, planeName):
         line=F.readline()
     F.close()
     if found==False:
-        planeInfo==None
+        planeInfo=None
     return planeInfo
 
 def Speed():
