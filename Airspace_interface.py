@@ -13,6 +13,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 fileAER="cat_aer.txt"
 fileNAV="cat_nav"
 fileSEG="cat_seg.txt"
+filePLANE="airplane_list.txt"
+firstPATH=False
 
 global nav_list2
 nav_list2 = []
@@ -61,21 +63,6 @@ def LoadFileSEG():
         with open(fileSEG, "w") as f:
             f.writelines(contingut)
 
-def LoadFileSpeed():
-    global fileSpeed
-    ruta_fitxerSpeed = filedialog.askopenfilename(
-        title="Selecciona un fitxer .txt",
-        filetypes=[("Fitxers de text", "*.txt")]
-    )
-    if ruta_fitxerSpeed:
-        print("Has seleccionat:", ruta_fitxerSpeed)
-        with open(ruta_fitxerSpeed, "r", encoding="utf-8") as fitxerSpeed:
-            contingutSpeed = fitxerSpeed.read()
-        fileSpeed="new_data_SEG1.txt"
-        with open(fileSpeed, "w") as f:
-            f.writelines(contingutSpeed)
-
-
 def CarregarDades():
     global g
     global fileAER
@@ -87,7 +74,7 @@ def CarregarDades():
     LoadNavAirports(fileAER, g)
 
 def LoadFilePlane():
-    global filePlane
+    global filePLANE
     ruta_fitxerPlane = filedialog.askopenfilename(
         title="Selecciona un fitxer .txt",
         filetypes=[("Fitxers de text", "*.txt")]
@@ -95,30 +82,39 @@ def LoadFilePlane():
     if ruta_fitxerPlane:
         with open(ruta_fitxerPlane, "r", encoding="utf-8") as fitxer:
             contingut = fitxer.read()
-        filePlane="new_data_Plane.txt"
-        with open(filePlane, "w") as f:
+        filePLANE="new_data_Plane.txt"
+        with open(filePLANE, "w") as f:
             f.writelines(contingut)
     else:
         print("No airplane list found")
-    return filePlane
+    #return filePlane
 
 def SpeedFuel():
-    LoadFilePlane()
-    planeCode=ent4.get()
-    LoadPlane(filePlane,planeCode)
-    flighTime=Speed()
-    flightFuel=Fuel()
-    window=tk.Toplevel(root)
-    window.title("FLIGHT TIME AND FUEL USAGE")
-    label1=tk.Label(window,text=f"FLIGHT TIME: {flighTime:.2f}hours")
-    print("In flight time calculation, the take of and landing are not taken into consideration.")
-    label1.pack(padx=10,pady=5)
-    label2=tk.Label(window,text=f"NEEDED FUEL: {flightFuel:.2f}litters")
-    label2.pack(padx=10,pady=5)
-    close1=tk.Button(window,text="Close",command=window.destroy)
-    close1.pack()
+    if firstPATH==True:
+        planeCode=ent4.get()
+        LoadPlane(filePLANE,planeCode)
+        flighTime=Speed()
+        flightFuel=Fuel()
+        window=tk.Toplevel(root)
+        window.title("FLIGHT TIME AND FUEL USAGE")
+        label1=tk.Label(window,text=f"FLIGHT TIME: {flighTime:.2f}hours") #escriure només amb dos decimals el .2f
+        print("In flight time calculation, the take of and landing are not taken into consideration.")
+        label1.pack(padx=10,pady=5)
+        label2=tk.Label(window,text=f"NEEDED FUEL: {flightFuel:.2f}litters")
+        label2.pack(padx=10,pady=5)
+        close1=tk.Button(window,text="Close",command=window.destroy)
+        close1.pack()
+    else:
+        window1=tk.Toplevel(root)
+        window1.title("ERROR")
+        label3=tk.Label(window1,text="INPUT SHORTEST PATH FIRST")
+        label3.pack(padx=10,pady=5)
+        close2=tk.Button(window1,text="Close",command=window1.destroy)
+        close2.pack()
 
 def Airspace():
+    global firstPATH
+    firstPATH=False
     CarregarDades()
     #destruim l'anterior grafic:
     for widget in right_frame.winfo_children():
@@ -129,6 +125,8 @@ def Airspace():
     graf.get_tk_widget().pack(fill="both", expand=True)
 
 def Neighbours():
+    global firstPATH
+    firstPATH=False
     CarregarDades()
     neighbour_origin=ent1.get()
     fign = NeighboursMap(g,neighbour_origin)
@@ -148,6 +146,8 @@ def AirportsForShortestPath():
     SP_dest=info[1]
 
 def ShowSPath():
+    global firstPATH
+    firstPATH=True
     CarregarDades()
     AirportsForShortestPath()
     #destruim l'anterior grafic:
@@ -161,6 +161,8 @@ def ShowSPath():
         grafSP.get_tk_widget().pack(fill="both",expand=True)
 
 def ShowReach():
+    global firstPATH
+    firstPATH=False
     CarregarDades()
     #destruim l'anterior grafic:
     for widget in right_frame.winfo_children():
