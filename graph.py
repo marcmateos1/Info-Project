@@ -259,7 +259,7 @@ def CreateGraph_2():
 def Reachability(graph, nodename):
     origin=None
     for node in graph.nodes:
-        if nodename==nodename:
+        if node.name==nodename:
             origin=node
             break
     if origin==None:
@@ -283,6 +283,7 @@ def Reachability(graph, nodename):
                     if vecino not in reach:
                         reach.append(vecino)
                         new=True
+
         print(reach[0].name)
         return reach
 
@@ -294,13 +295,12 @@ def Plot_All_Paths(graph, reachable_nodes):
         i = 1
         all_paths = []
         while i < len(reachable_nodes):
-            n = FindShortestPath(graph, reachable_nodes[0], reachable_nodes[i])
+            n = NewFindShortestPath(graph, reachable_nodes[0], reachable_nodes[i])
             all_paths.append(n)
             i = i + 1
         return all_paths
 
     all_paths=AddPossiblePaths(graph, reachable_nodes)
-
     PlotForPath(graph,ax)
     for nodes in reachable_nodes:
         plt.scatter(nodes.x,nodes.y, color="blue", s=100)
@@ -376,4 +376,41 @@ def FindShortestPath(graph, origin, destination):
         return resultado
     else:
         print("No se encontró camino.")
+        return None
+
+def NewFindShortestPath(graph, origin, destination):
+    camins_possibles = []
+
+    camino_inicial = Path()
+    AddNodeToPath(camino_inicial, origin)
+    camins_possibles.append(camino_inicial)
+
+    found = False
+    resultado = None
+
+    while len(camins_possibles) != 0 and found == False:
+        # Ordena caminos por coste estimado (puedes añadir atributo si quieres)
+        camins_possibles.sort(key=lambda p: len(p.nodelist))
+
+        camino_actual = camins_possibles.pop(0)  # saca el mejor camino
+        nodo_actual = camino_actual.nodelist[-1]
+
+        for vecino in nodo_actual.list_of_neighbours:
+            # Evita ciclos
+            if vecino in camino_actual.nodelist:
+                continue
+
+            nuevo_camino = camino_actual.copy()
+            AddNodeToPath(nuevo_camino, vecino)
+
+            if vecino == destination:
+                found = True
+                resultado = nuevo_camino
+                break  # terminamos
+
+            camins_possibles.append(nuevo_camino)
+
+    if found:
+        return resultado
+    else:
         return None
