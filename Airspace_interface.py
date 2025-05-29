@@ -385,7 +385,7 @@ botoSeg.pack(fill="x",pady=(0,10))
 #botó speed
 frameSpeed=tk.Frame(low_frame1,bg="#e8eaf6")
 frameSpeed.grid(row=1, column=0, columnspan=3,sticky="nswe", padx=10, pady=10)
-botoSpeed=tk.Button(frameSpeed, text="IMPORT AIRPLANE SPEED FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFilePlane)
+botoSpeed=tk.Button(frameSpeed, text="IMPORT AIRPLANE FUEL - SPEED FILE", bg="#007acc", fg="white", font=("Segoe UI", 10, "bold"), relief="flat", height=2, command=LoadFilePlane)
 botoSpeed.pack(fill="x",pady=(0,10))
 
 #fila sota 2
